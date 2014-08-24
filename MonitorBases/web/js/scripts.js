@@ -127,6 +127,41 @@ function SGAMonitor() {
     setTimeout(SGAMonitor, 5000);
 }
 //////////////////////////////////
+
+/////////////////////////////////
+
+var yy = 5;
+var transArray = new Array();
+function TransMonitor() {
+    transArray.push({x: new Date(), y: Math.round(Math.random() * 100)});
+    var chart = new CanvasJS.Chart("chartContainer",
+            {
+                title: {
+                    text: "Transactions for a X time"
+                },
+                axisX: {
+                    labelAngle: 45,
+                    valueFormatString: "HH:mm",
+                    title: "Time"
+                },
+                axisY: {
+                    title: "Transactions"
+                },
+                data: [
+                    {
+                        color: "rgb(175, 0, 0)",
+                        type: "area",
+                        dataPoints: transArray
+                    }
+                ]
+            });
+    chart.render();
+    if (transArray.length > 60)
+        transArray.shift();
+    setTimeout(TransMonitor, 1000);
+}
+
+/////////////////////////////////
 /*
  // using jQuery for simplicity, but you can implement in other libraries or vanilla javascript if you want
  function drawChart() {
