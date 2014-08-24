@@ -97,7 +97,6 @@ function CPUusage() {
 }
 
 ////////////////////////////////
-var yy = 5;
 var sgaArray = new Array();
 function SGAMonitor() {
     sgaArray.push({x: new Date(), y: Math.round(Math.random() * 100)});
@@ -108,7 +107,7 @@ function SGAMonitor() {
                 },
                 axisX: {
                     labelAngle: 45,
-                    valueFormatString: "HH:mm",
+                    valueFormatString: "HH:mm:ss",
                     title: "Time"
                 },
                 axisY: {
@@ -125,7 +124,7 @@ function SGAMonitor() {
     chart.render();
     if (sgaArray.length > 60)
         sgaArray.shift();
-    setTimeout(SGAMonitor, 1000);
+    setTimeout(SGAMonitor, 5000);
 }
 //////////////////////////////////
 /*
