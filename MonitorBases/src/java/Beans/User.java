@@ -1,0 +1,5 @@
+package Beans;
+
+class User {
+    
+}

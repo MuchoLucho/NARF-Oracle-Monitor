@@ -1,10 +1,6 @@
 #wrapper{
 }
 
-h2{
-    color: white;
-}
-
 .navbar-ex1-collapse {
     color: white;
     margin-bottom: 15px;
@@ -23,4 +19,13 @@ h2{
 .health{
     width: 100%; 
     max-width: 150px;
+}
+
+.semaphore{
+    height: 45px;
+}
+
+.table tr:hover td{
+    background-color: #333;
+    color: white;
 }

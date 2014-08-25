@@ -15,7 +15,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body onload="circular();gauge()">
+    <body onload="tablespaces()">
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -76,26 +76,19 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Dashboard <small>Welcome</small>
+                                Tablespaces <small>Monitor</small>
                             </h1>
                         </div>                        
                     </div><!-- /.row -->
                     <div class="row">
-                        <div class="col-md-3 col-sm-3 inverseBox">
-                            <h3>General Information</h3>
-                            <h4>DB Name</h4><p>Database Name</p>
-                            <h4>Oracle Version</h4><p>Version</p>
-                            <hr/>
-                            <h3>Database Health</h3>
-                            <h4>Status</h4><img class="health center-block" src="../img/bad.png" alt="BAD"/>
-                            <h4>Cause</h4><p>Nothing</p>
-                            <h4>Recomendation</h4><p>Nothing</p>
+                        <div class="col-lg-4 col-md-4 col-sm-4 jumbotron">
+                            <div id="mainChart" style="height: 450px; width: 100%;"></div>
                         </div>
-                        <div class="col-md-6 col-lg-6">
-                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 jumbotron">
+                            <div id="tablesChart" style="height: 450px; width: 100%;"></div>
                         </div>
-                        <div class="col-md-3 col-lg-3">
-                            <canvas id="gauge2" class="center-block"></canvas>
+                        <div class="col-lg-4 col-md-4 col-sm-4 jumbotron">
+                            <div id="memoryChart" style="height: 450px; width: 100%;"></div>
                         </div>
                     </div>
                 </div> <!--Container-fluid-->

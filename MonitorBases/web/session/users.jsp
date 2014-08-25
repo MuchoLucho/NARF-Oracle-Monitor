@@ -27,7 +27,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.jsp" rel="home">
+                    <a class="navbar-brand" href="../index.jsp" rel="home">
                         <img src="../img/logo_lg.png" class="hidden-xs" alt="NARF Oracle Monitor"/>
                         <img src="../img/logo_xs.png" class="hidden-lg hidden-md hidden-sm" alt="NARF Oracle Monitor"/>
                     </a>
