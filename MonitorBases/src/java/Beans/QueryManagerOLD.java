@@ -15,7 +15,7 @@ import oracle.jdbc.OracleResultSet;
  *
  * @author Javier
  */
-public class Consultor {
+public class QueryManagerOLD {
 
     private static Connection con = null;/*Estatico. Por el momento solo se permite conexion a una sola base.*/
 
@@ -25,10 +25,10 @@ public class Consultor {
             Class.forName("oracle.jdbc.OracleDriver");
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", user, pass);
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;
@@ -61,7 +61,7 @@ public class Consultor {
                 tbSpaces.updateTBS(nombre, estado, tamTotal, tamUsado, dirDBF);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -115,7 +115,7 @@ public class Consultor {
                 users.updateUsers(username, defaultTBS, tempTBS, status);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -142,7 +142,7 @@ public class Consultor {
                 tables.updateTables(name, owner, tamTabla, numRows, numRows, TBSName);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -163,7 +163,7 @@ public class Consultor {
             }
             return new SGAData(total[0], total[2], total[1], used[0], used[2], used[1]);
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -186,92 +186,50 @@ public class Consultor {
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
-            int[] total = new int[3];
             int[] used = new int[3];
             int i = 0;
-            while (rs.next()) {
-                total[i] = rs.getInt("TOTAL");
+            while (rs.next() && i < 3) {
                 used[i] = rs.getInt("USED");
                 i++;
             }
-            sgadata.updateValues(total[0], total[2], total[1], used[0], used[2], used[1]);
+            //sgadata.updateValues(used[0], used[2], used[1]);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+    /*
+     public void getLogInfo() {
+     PreparedStatement pst;
+     ResultSet rs;
+     String sql = "SELECT\n"
+     + "    f.pool POOLNAME\n"
+     + "  , s.sgasize/1024 TOTAL\n"
+     + "  ,(s.sgasize-f.bytes)/1024 USED\n"
+     + "FROM\n"
+     + "    (SELECT SUM(bytes) sgasize, pool FROM v$sgastat GROUP BY pool) s\n"
+     + "  , v$sgastat f\n"
+     + "WHERE\n"
+     + "    f.name = 'free memory'\n"
+     + "  AND f.pool = s.pool\n"
+     + "ORDER BY POOLNAME\n"
+     + "  ;";
+     try {
+     pst = con.prepareStatement(sql);
+     rs = pst.executeQuery();
+     int[] used = new int[3];
+     int i = 0;
+     while (rs.next() && i < 3) {
+     used[i] = rs.getInt("USED");
+     i++;
+     }
+     sgadata.updateValues(used[0], used[2], used[1]);
 
-    public void getLogInfo(Redos redos) {
-        PreparedStatement pst;
-        ResultSet rs;
-        String sql = "select \n"
-                + "v$log.group# GROUPNO,\n"
-                + "sequence#,\n"
-                + "bytes/1024 as SIZEKB,\n"
-                + "members NUMMEMBERS,\n"
-                + "archived,\n"
-                + "v$log.status,\n"
-                + "member FILEPATH \n"
-                + "from v$log, v$logfile where v$log.group#=v$logfile.GROUP#;";
-        try {
-            pst = con.prepareStatement(sql);
-            rs = pst.executeQuery();
+     } catch (SQLException ex) {
+     Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+     }
 
-            String filePath;
-            while (rs.next()) {
-                int groupNum = rs.getInt("GROUPNO");
-                /*if(!redos.existsGroup(groupNum)){
-                 if(filePath.isEmpty()) filePath = rs.getString("FILEPATH");
-                 else filePath = filePath.concat("\n"+rs.getString("FILEPATH"));
-                 }*/
-                filePath = rs.getString("FILEPATH");
-                int sequenceNum = rs.getInt("sequence#");
-                int sizeKB = rs.getInt("SIZEKB");
-                int members = rs.getInt("NUMMEMBERS");
-                boolean archived = !rs.getString("archived").equals("NO");
-                String status = rs.getString("status");
-                redos.insertRedo(groupNum, sequenceNum, sizeKB, members, archived, status, filePath);
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void getLogActualInfo(Redos redos) {//FOR REAL TIME QUERYING.
-        PreparedStatement pst;
-        ResultSet rs;
-        String sql = "select \n"
-                + "v$log.group# GROUPNO,\n"
-                + "sequence#,\n"
-                + "bytes/1024 as SIZEKB,\n"
-                + "members NUMMEMBERS,\n"
-                + "archived,\n"
-                + "v$log.status,\n"
-                + "member FILEPATH \n"
-                + "from v$log, v$logfile where v$log.group#=v$logfile.GROUP#;";
-        try {
-            pst = con.prepareStatement(sql);
-            rs = pst.executeQuery();
-
-            while (rs.next()) {
-                int groupNum = rs.getInt("GROUPNO");
-                int sequenceNum = rs.getInt("sequence#");
-                int sizeKB = rs.getInt("SIZEKB");
-                int members = rs.getInt("NUMMEMBERS");
-                boolean archived = !rs.getString("archived").equals("NO");
-                String status = rs.getString("status");
-                redos.updateRedo(groupNum, sequenceNum, members, archived, status);
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
+     }
+     */
 }

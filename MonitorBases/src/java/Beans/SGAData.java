@@ -27,7 +27,10 @@ public class SGAData {
         this.largePoolUsed = largePoolUsed;
     }
 
-    public void updateValues(int javaPoolUsed, int sharedPoolUsed, int largePoolUsed) {
+    public void updateValues(int javaPoolTotal, int sharedPoolTotal, int largePoolTotal, int javaPoolUsed, int sharedPoolUsed, int largePoolUsed) {
+        this.javaPoolTotal = javaPoolTotal;
+        this.sharedPoolTotal = sharedPoolTotal;
+        this.largePoolTotal = largePoolTotal;
         this.javaPoolUsed = javaPoolUsed;
         this.sharedPoolUsed = sharedPoolUsed;
         this.largePoolUsed = largePoolUsed;
