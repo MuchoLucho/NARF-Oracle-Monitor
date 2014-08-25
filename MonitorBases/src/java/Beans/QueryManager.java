@@ -15,7 +15,7 @@ import oracle.jdbc.OracleResultSet;
  *
  * @author Javier
  */
-public class Consultor {
+public class QueryManager {
 
     private static Connection con = null;/*Estatico. Por el momento solo se permite conexion a una sola base.*/
 
@@ -25,10 +25,25 @@ public class Consultor {
             Class.forName("oracle.jdbc.OracleDriver");
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", user, pass);
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean connectDB(String user, String pass,String address,String port,String instanceName) {
+        try {
+            String conAddr = "jdbc:oracle:thin:@"+address+":"+port+":"+instanceName;
+            Class.forName("oracle.jdbc.OracleDriver");
+            con = DriverManager.getConnection(conAddr, user, pass);
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;
@@ -61,7 +76,7 @@ public class Consultor {
                 tbSpaces.updateTBS(nombre, estado, tamTotal, tamUsado, dirDBF);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -115,7 +130,7 @@ public class Consultor {
                 users.updateUsers(username, defaultTBS, tempTBS, status);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -142,7 +157,7 @@ public class Consultor {
                 tables.updateTables(name, owner, tamTabla, numRows, numRows, TBSName);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -163,7 +178,7 @@ public class Consultor {
             }
             return new SGAData(total[0], total[2], total[1], used[0], used[2], used[1]);
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -197,7 +212,7 @@ public class Consultor {
             sgadata.updateValues(total[0], total[2], total[1], used[0], used[2], used[1]);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -236,7 +251,7 @@ public class Consultor {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -269,7 +284,7 @@ public class Consultor {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
