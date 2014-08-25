@@ -15,7 +15,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body onload="SGAMonitor();CPUusage();RAMusage()">
+    <body onload="SGAMonitor()">
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -67,8 +67,7 @@
                             <a href="licenses.jsp"><span class="glyphicon glyphicon-file"></span>  Licenses</a>
                         </li>                        
                     </ul>
-                </div>
-                <!-- /.navbar-collapse -->
+                </div><!-- /.navbar-collapse -->
             </nav>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -91,18 +90,17 @@
                             <h4>Cause</h4><p>Nothing</p>
                             <h4>Recomendation</h4><p>Nothing</p>
                         </div>
-                        <div class="col-md-6 col-lg-6">
+                        <div class="col-md-8 col-lg-8"><!--Si se quiere CPU y RAM se ponen col-md-6-->
                             <div id="chartContainer" style="height: 450px; width: 100%;"></div>
                         </div>
-                        <div class="col-md-3 col-lg-3">
+                        <!--<div class="col-md-3 col-lg-3">
                             <h3>CPU Consumed</h3>
                             <canvas id="gauge1" class="center-block"></canvas>
                             <h3>RAM Consumed</h3>
                             <canvas id="gauge2" class="center-block"></canvas>
-
-                        </div>
+                        </div>-->
                     </div>
-                </div> <!--Container-fluid-->
+                </div><!--Container-fluid-->
             </div><!-- /#page-wrapper -->
         </div><!-- /#wrapper -->
         <script type="text/javascript" src="../js/jquery-1.11.0.js"></script>

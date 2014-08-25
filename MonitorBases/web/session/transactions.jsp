@@ -92,7 +92,7 @@
                             <h4>Recomendation</h4><p>Nothing</p>
                         </div>
                         <div class="col-md-6 col-lg-6">
-                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                            <div id="chartContainer" style="height: 450px; width: 100%;"></div>
                         </div>
                         <div class="col-md-3 col-lg-3">
                             <canvas id="gauge2" class="center-block"></canvas>
