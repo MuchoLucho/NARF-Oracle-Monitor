@@ -1,10 +1,10 @@
 /////////////TABLESPACES/////////////////////////////////////////////////////////////
-var wii = 1.67;
-function tablespaces() {
-    var chart = new CanvasJS.Chart("chartContainer",
+var actualTBS = "";
+function TBS() {
+    var chart = new CanvasJS.Chart("mainChart",
             {
                 title: {
-                    text: "Gaming Consoles Sold in 2012"
+                    text: "Tablespaces"
                 },
                 animationEnabled: false,
                 legend: {
@@ -25,101 +25,89 @@ function tablespaces() {
                             {y: 80.24, legendText: "Google", indexLabel: "#percent%"},
                             {y: 8.16, legendText: "Yahoo!", indexLabel: "#percent%"},
                             {y: 4.67, legendText: "Bing", indexLabel: "#percent%"},
-                            {y: wii, legendText: "Baidu", indexLabel: "#percent%"},
                             {y: 0.98, legendText: "Others", indexLabel: "#percent%"}
                         ]
                     }
                 ]
             });
     chart.render();
-    wii += 3;
-    setTimeout(tablespaces, 3000);
+    setTimeout(actualTBS, 3000);
 }
-/*
- <div class="col-lg-4 col-md-4 col-sm-4 jumbotron">
- <div id="mainChart" style="height: 450px; width: 100%;"></div>
- </div>
- <div class="col-lg-4 col-md-4 col-sm-4 jumbotron">
- <div id="tablesChart" style="height: 450px; width: 100%;"></div>
- </div>
- <div class="col-lg-4 col-md-4 col-sm-4 jumbotron">
- <div id="memoryChart" style="height: 450px; width: 100%;"></div>
- </div> 
- */
-
-//////////////GAUGES///////////////////////////////////////////////////////////////
-function RAMusage() {
-    var ram = new Gauge({
-        renderTo: 'gauge2',
-        width: 200,
-        height: 200,
-        glow: true,
-        units: '%',
-        title: 'RAM',
-        strokeTicks: false,
-        highlights: [{
-                from: 60,
-                to: 80,
-                color: 'Yellow'
-            }, {
-                from: 80,
-                to: 100,
-                color: 'Red'
-            }],
-        animation: {
-            delay: 10,
-            duration: 300,
-            fn: 'bounce'
-        }
-    });
-    ram.onready = function() {
-        setInterval(function() {
-            ram.setValue(Math.random() * 100);
-        }, 1000);
-    };
-    ram.draw();
+function memTBS() {
+    var chart = new CanvasJS.Chart("memoryChart",
+            {
+                title: {
+                    text: "Ramaining Space"
+                },
+                animationEnabled: false,
+                legend: {
+                    verticalAlign: "center",
+                    horizontalAlign: "left",
+                    fontSize: 20,
+                    fontFamily: "Helvetica"
+                },
+                data: [
+                    {
+                        type: "pie",
+                        indexLabelFontFamily: "Garamond",
+                        indexLabelFontSize: 20,
+                        startAngle: -20,
+                        showInLegend: true,
+                        toolTipContent: "{legendText}: {y} KB",
+                        dataPoints: [
+                            {y: 80.24, legendText: "Google", indexLabel: "#percent%"},
+                            {y: 8.16, legendText: "Yahoo!", indexLabel: "#percent%"},
+                            {y: 4.67, legendText: "Bing", indexLabel: "#percent%"},
+                            {y: 0.98, legendText: "Others", indexLabel: "#percent%"}
+                        ]
+                    }
+                ]
+            });
+    chart.render();
+    setTimeout(memTBS, 3000);
 }
-
-function CPUusage() {
-    var cpu = new Gauge({
-        renderTo: 'gauge1',
-        width: 200,
-        height: 200,
-        glow: true,
-        units: '%',
-        title: 'CPU',
-        strokeTicks: false,
-        highlights: [{
-                from: 60,
-                to: 80,
-                color: 'Yellow'
-            }, {
-                from: 80,
-                to: 100,
-                color: 'Red'
-            }],
-        animation: {
-            delay: 10,
-            duration: 300,
-            fn: 'bounce'
-        }
-    });
-    cpu.onready = function() {
-        setInterval(function() {
-            cpu.setValue(Math.random() * 100);
-        }, 1000);
-    };
-    cpu.draw();
+function tablesTBS() {
+    var chart = new CanvasJS.Chart("tablesChart",
+            {
+                title: {
+                    text: "Tables"
+                },
+                animationEnabled: false,
+                legend: {
+                    verticalAlign: "center",
+                    horizontalAlign: "left",
+                    fontSize: 20,
+                    fontFamily: "Helvetica"
+                },
+                data: [
+                    {
+                        type: "pie",
+                        indexLabelFontFamily: "Garamond",
+                        indexLabelFontSize: 20,
+                        startAngle: -20,
+                        showInLegend: true,
+                        toolTipContent: "{legendText}: {y} KB",
+                        dataPoints: [
+                            {y: 80.24, legendText: "Google", indexLabel: "#percent%"},
+                            {y: 8.16, legendText: "Yahoo!", indexLabel: "#percent%"},
+                            {y: 4.67, legendText: "Bing", indexLabel: "#percent%"},
+                            {y: 0.98, legendText: "Others", indexLabel: "#percent%"}
+                        ]
+                    }
+                ]
+            });
+    chart.render();
+    setTimeout(tablesTBS, 3000);
 }
 
 ////////////////SGA MONITOR///////////////////////////////////////////////////////////
-var sgaArray = new Array();
+var sgaTimeLine = new Array();
 function SGAMonitor() {
     $.ajax({
         url: 'SGAService',
         dataType: 'text',
         success: function(response) {
-            sgaArray.push({x: new Date(), y: Math.round(parseInt(response))});
+            sgaTimeLine.push({x: new Date(), y: Math.round(parseInt(response))});
             var chart = new CanvasJS.Chart("chartContainer",
                     {
                         title: {text: "SGA Usage"},
@@ -133,16 +121,132 @@ function SGAMonitor() {
                             {
                                 color: "rgb(175, 0, 0)",
                                 type: "area",
-                                dataPoints: sgaArray
+                                dataPoints: sgaTimeLine
                             }
                         ]
                     });
             chart.render();
-            if (sgaArray.length > 60)
-                sgaArray.shift();
+            if (sgaTimeLine.length > 60)
+                sgaTimeLine.shift();
             setTimeout(SGAMonitor, 2000);
         }
     });
+}
+
+/*
+ private int javaPoolTotal;
+ private int sharedPoolTotal;
+ private int largePoolTotal;
+ private int javaPoolUsed;
+ private int sharedPoolUsed;
+ private int largePoolUsed;
+ */
+var sgaArray= [];
+function updatePools() {
+    $.ajax({
+        url: 'SGAService',
+        dataType: 'text',
+        success: function(response) {
+            sgaArray=response.split(";");
+            sgaArray.pop();
+            setTimeout(updatePools, 2000);
+        }
+    });
+}
+
+function sharedPool() {
+    var sharedPool = new Gauge({
+        renderTo: 'sharedPool',
+        width: 100,
+        height: 100,
+        glow: true,
+        units: '% Consumed',
+        title: 'Shared Pool',
+        strokeTicks: false,
+        highlights: [{
+                from: 60,
+                to: 80,
+                color: 'Yellow'
+            }, {
+                from: 80,
+                to: 100,
+                color: 'Red'
+            }],
+        animation: {
+            delay: 10,
+            duration: 300,
+            fn: 'bounce'
+        }
+    });
+    sharedPool.onready = function() {
+        setInterval(function() {
+            sharedPool.setValue(Math.random() * 100);
+        }, 2000);
+    };
+    sharedPool.draw();
+}
+
+function largePool() {
+    var largePool = new Gauge({
+        renderTo: 'largePool',
+        width: 150,
+        height: 150,
+        glow: true,
+        units: '% Consumed',
+        title: 'Large Pool',
+        strokeTicks: false,
+        highlights: [{
+                from: 60,
+                to: 80,
+                color: 'Yellow'
+            }, {
+                from: 80,
+                to: 100,
+                color: 'Red'
+            }],
+        animation: {
+            delay: 10,
+            duration: 300,
+            fn: 'bounce'
+        }
+    });
+    largePool.onready = function() {
+        setInterval(function() {
+            largePool.setValue(Math.random() * 100);
+        }, 2000);
+    };
+    largePool.draw();
+}
+function javaPool() {
+    var javaPool = new Gauge({
+        renderTo: 'javaPool',
+        width: 150,
+        height: 150,
+        glow: true,
+        units: '% Consumed',
+        title: 'Java Pool',
+        strokeTicks: false,
+        highlights: [{
+                from: 60,
+                to: 80,
+                color: 'Yellow'
+            }, {
+                from: 80,
+                to: 100,
+                color: 'Red'
+            }],
+        animation: {
+            delay: 10,
+            duration: 300,
+            fn: 'bounce'
+        }
+    });
+    javaPool.onready = function() {
+        setInterval(function() {
+            javaPool.setValue(Math.random() * 100);
+        }, 2000);
+    };
+    javaPool.draw();
 }
 
 ////////////////TRANSACTION MONITOR//////////////////////////////////////////////////
