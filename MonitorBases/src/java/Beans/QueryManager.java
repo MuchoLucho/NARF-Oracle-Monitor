@@ -228,7 +228,7 @@ public class QueryManager {
                 + "archived,\n"
                 + "v$log.status,\n"
                 + "member FILEPATH \n"
-                + "from v$log, v$logfile where v$log.group#=v$logfile.GROUP#;";
+                + "from v$log, v$logfile where v$log.group#=v$logfile.GROUP#";
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
