@@ -403,7 +403,7 @@ function genRedos() {
             for (i = 0; i < res.length; i += 3) {
                 str += "<tr onclick=\"changeSelectedLog(" + res[i] + ")\">";
                 str += "\t<td><img src=\"../img/" + res[i + 2].toLowerCase() + ".png\" alt=\"" + res[i + 1] + "\" class=\"semaphore\"/></td>";
-                str += "\t<td>Nº" + res[i] + "</td>";
+                str += "\t<td>N�" + res[i] + "</td>";
                 str += "\t<td>" + res[i + 1] + " member" + ((res[i + 2] === '1') ? "" : "s") + "</td>";
                 str += "</tr>";
             }

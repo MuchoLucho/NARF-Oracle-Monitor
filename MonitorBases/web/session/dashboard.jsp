@@ -80,7 +80,7 @@
                             <h4>Oracle Version</h4><p>Version</p>
                             <hr/>
                             <h3>Database Health</h3>
-                            <h4>Status</h4><span class="health"></span>
+                            <h4>Status</h4><span class="health" id="health"></span>
                             <h4>Cause</h4><p>Nothing</p>
                             <h4>Recomendation</h4><p>Nothing</p>
                         </div>
