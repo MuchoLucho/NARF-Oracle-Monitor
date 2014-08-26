@@ -14,7 +14,8 @@ public class SGAService extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            out.print(Model.sgadata.toString());
+                 out.print(Model.sgadata.toString());
+
         }
     }
 

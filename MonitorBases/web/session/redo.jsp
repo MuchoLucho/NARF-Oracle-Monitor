@@ -34,17 +34,13 @@
                     </a>
                 </div>
                 <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> John Smith <b class="caret"></b></a>
-                        <ul class="dropdown-menu">                           
-                            <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Inbox</a></li>
-                            <li><a href="#"><i class="glyphicon glyphicon-wrench"></i> Settings</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-off"></span> Log Out</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <form method="post" action="Lougout">
+                    <ul class="nav navbar-right top-nav">
+                        <li>
+                            <button class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> Logout </button>
+                        </li>
+                    </ul>
+                </form>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <br/><br/>
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -53,16 +49,10 @@
                             <a href="dashboard.jsp"><span class="glyphicon glyphicon-home"></span>  Dashboard</a>
                         </li> 
                         <li>
-                            <a href="users.jsp"><span class="glyphicon glyphicon-user"></span>  Users & Roles</a>
-                        </li>
-                        <li>
                             <a href="tablespaces.jsp"><span class="glyphicon glyphicon-hdd"></span>  Tablespaces</a>
                         </li>
                         <li class="active">
                             <a href="redo.jsp"><span class="glyphicon glyphicon-time"></span>  Redo Log</a>
-                        </li>
-                        <li>
-                            <a href="transactions.jsp"><span class="glyphicon glyphicon-stats"></span>  Transactions</a>
                         </li>
                         <li>
                             <a href="licenses.jsp"><span class="glyphicon glyphicon-file"></span>  Licenses</a>

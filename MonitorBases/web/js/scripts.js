@@ -1,6 +1,7 @@
 var currentTBS = "nothing";
 var currentTable = "nothing";
-
+var sgaTimeLine = new Array();
+var sgaArray = [];
 function updateTBS() {
     var tbs = [];
     $.ajax({
@@ -82,13 +83,18 @@ function memTBS() {
         success: function(response) {
             var tbsaux = response.split(";");
             tbsaux.pop();
-            for (i = 0; i < tbsaux.length; i += 2) {
+            //for (i = 0; i < tbsaux.length; i += 2) {
                 memtbs.push({
-                    y: parseInt(tbsaux[i + 1]),
-                    legendText: tbsaux[i],
+                    y: parseInt(tbsaux[0]),
+                    legendText: "USED",
                     indexLabel: "#percent%"
                 });
-            }
+                memtbs.push({
+                    y: parseInt(tbsaux[1]),
+                    legendText: "REMAINING",
+                    indexLabel: "#percent%"
+                });
+            //}
             var chart = new CanvasJS.Chart("memoryChart", {
                 title: {
                     text: "Ramaining Space"
@@ -169,8 +175,8 @@ function tablesTBS() {
 }
 
 ////////////////SGA MONITOR///////////////////////////////////////////////////////////
-var sgaTimeLine = new Array();
-var sgaArray = [];
+
+
 function SGAMonitor() {
     var total = parseInt(sgaArray[1]) + parseInt(sgaArray[3]) + parseInt(sgaArray[5]);
     var used = parseInt(sgaArray[0]) + parseInt(sgaArray[2]) + parseInt(sgaArray[4]);
@@ -210,6 +216,7 @@ function updatePools() {
         success: function(response) {
             sgaArray = response.split(";");
             setTimeout(updatePools, 2000);
+
         }
     });
 }
@@ -249,13 +256,18 @@ function sharedPool() {
             fn: 'bounce'
         }
     });
+
     sharedPool.onready = function() {
         setInterval(function() {
             sharedPool.setValue(parseInt(parseInt(sgaArray[0]) * 100 / parseInt(sgaArray[1])));
+            var sPtext = document.getElementById("sPtext");
+            sPtext.innerHTML = "<strong>Mem Used: </strong>" + String(sgaArray[0]) + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[1] + " bytes";
+            sharedPool.draw();
         }, 2000);
     };
+
     var sPtext = document.getElementById("sPtext");
-    sPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[0] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[1] + " bytes";
+    sPtext.innerHTML = "<strong>Mem Used: </strong>" + String(sgaArray[0]) + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[1] + " bytes";
     sharedPool.draw();
 }
 
@@ -283,9 +295,13 @@ function largePool() {
             fn: 'bounce'
         }
     });
+    //alert("SGA Array before onready funct " + sgaArray);
     largePool.onready = function() {
         setInterval(function() {
             largePool.setValue(parseInt(parseInt(sgaArray[2]) * 100 / parseInt(sgaArray[3])));
+            var lPtext = document.getElementById("lPtext");
+            lPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[2] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[3] + " bytes";
+            largePool.draw();
         }, 2000);
     };
     var lPtext = document.getElementById("lPtext");
@@ -320,43 +336,14 @@ function javaPool() {
     javaPool.onready = function() {
         setInterval(function() {
             javaPool.setValue(parseInt(parseInt(sgaArray[4]) * 100 / parseInt(sgaArray[5])));
+            var jPtext = document.getElementById("jPtext");
+            jPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[4] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[5] + " bytes";
+            javaPool.draw();
         }, 2000);
     };
     var jPtext = document.getElementById("jPtext");
     jPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[4] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[5] + " bytes";
     javaPool.draw();
-}
-
-////////////////TRANSACTION MONITOR////////////////////////////////////////////////////
-
-var transArray = new Array();
-function TransMonitor() {
-    transArray.push({
-        x: new Date(),
-        y: Math.round(Math.random() * 100)
-    });
-    var chart = new CanvasJS.Chart("chartContainer", {
-        title: {
-            text: "Transactions"
-        },
-        axisX: {
-            labelAngle: 45,
-            valueFormatString: "HH:mm:ss",
-            title: "Time"
-        },
-        axisY: {
-            title: "Transactions"
-        },
-        data: [{
-                color: "rgb(0, 175, 0)",
-                type: "area",
-                dataPoints: transArray
-            }]
-    });
-    chart.render();
-    if (transArray.length > 60)
-        transArray.shift();
-    setTimeout(TransMonitor, 1000);
 }
 
 ////////////////REDO LOGS//////////////////////////////////////////////////////////////
@@ -422,76 +409,6 @@ function genRedos() {
             }
             especifico.innerHTML = str;
             setTimeout(genRedos, 30000);
-        },
-        error: function(response) {
-            especifico.innerHTML = "Unespected error: " + response; //Show Errors
-        }
-    });
-}
-
-////////////////////////////////////////////////////Users///////////////////////
-
-var userSelected = 0; //Indicates the selected group
-
-function changeSelectedUser(i) {
-    userSelected = parseInt(i);
-}
-
-function selectedUser() {
-    var especifico = document.getElementById("especifico");
-    var str = "";
-    var res = [];
-    $.ajax({
-        url: 'redoService',
-        data: {
-            type: String(userSelected)
-        },
-        dataType: 'text',
-        success: function(response) {
-            if (response === "nothing") {
-                str = "<h2>Select one of the left group to show the log information</h2>";
-            } else {
-                res = response.split(";");
-                str = "<table class=\"table\"><thead><tr><th><h3>Group " + String(logSelected) + "</h3></th></tr></thead>";
-                str += "<tbody><tr><th>Sequence</strong></th></tr><tr><td>" + res[0] + "</td></tr>";
-                str += "<tr><th>Size</strong></th></tr><tr><td>" + res[1] + " KB</td></tr>";
-                str += "<tr><th># Members</strong></th></tr><tr><td>" + res[2] + " members</td></tr>";
-                str += "<tr><th>Archived</strong></th></tr><tr><td>" + res[3] + "</td></tr>";
-                str += "<tr><th>Status</strong></th></tr><tr><td>" + res[4] + "</td></tr>";
-                str += "<tr><th>Path</strong></th></tr><tr><td>" + res[5] + "</td></tr>";
-                str += "</tbody></table>";
-            }
-            especifico.innerHTML = str;
-            setTimeout(selectedUser, 2000);
-        },
-        error: function(response) {
-            especifico.innerHTML = "Unespected error: " + response; //Show Errors
-        }
-    });
-}
-
-function genUser() {
-    var especifico = document.getElementById("general");
-    var str = "";
-    var res = [];
-    $.ajax({
-        url: 'redoService',
-        data: {
-            type: 'update'
-        },
-        dataType: 'text',
-        success: function(response) {
-            res = response.split(";");
-            res.pop();
-            for (i = 0; i < res.length; i += 3) {
-                str += "<tr onclick=\"changeSelectedLog(" + res[i] + ")\">";
-                str += "\t<td><img src=\"../img/" + res[i + 1].toLowerCase() + ".png\" alt=\"" + res[i + 1] + "\" class=\"semaphore\"/></td>";
-                str += "\t<td>Nº" + res[i] + "</td>";
-                str += "\t<td>" + res[i + 2] + " member" + ((res[i + 2] === '1') ? "" : "s") + "</td>";
-                str += "</tr>";
-            }
-            especifico.innerHTML = str;
-            setTimeout(genUser, 30000);
         },
         error: function(response) {
             especifico.innerHTML = "Unespected error: " + response; //Show Errors

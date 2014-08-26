@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tables {
+
     ArrayList<String> tableList = new ArrayList<>();
     HashMap<String, TableValues> hashTables = new HashMap<>();
 
@@ -34,20 +35,22 @@ public class Tables {
             values.setTablespace(tablespace);
         } else {
             values = new TableValues(owner, usedSpace, numRows, avgRowLen, tablespace);
+            tableList.add(name);
         }
         hashTables.put(name, values);//No se si se ocupa para el primer caso.
     }
-    
-    public String tablaSeleccionada(String i){
+
+    public String tablaSeleccionada(String i) {
         return hashTables.get(i).toString();
-    } 
-    
-    public String allTables(String tbs){
+    }
+
+    public String allTables(String tbs) {
         StringBuilder str = new StringBuilder();
-        for (String tb:tableList){
+        for (String tb : tableList) {
             TableValues tbv = hashTables.get(tb);
-            if(tbv.getTablespace().equals(tbs))
+            if (tbv.getTablespace().equals(tbs)) {
                 str.append(tb).append(";").append(tbv.getUsedSpace()).append(";");
+            }
         }
         return str.toString();
     }
