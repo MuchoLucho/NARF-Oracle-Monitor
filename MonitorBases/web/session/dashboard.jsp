@@ -15,7 +15,10 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body onload="SGAMonitor()">
+    <body onload="SGAMonitor();
+            sharedPool();
+            largePool();
+            javaPool();">
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -90,15 +93,19 @@
                             <h4>Cause</h4><p>Nothing</p>
                             <h4>Recomendation</h4><p>Nothing</p>
                         </div>
-                        <div class="col-md-8 col-lg-8"><!--Si se quiere CPU y RAM se ponen col-md-6-->
-                            <div id="chartContainer" style="height: 450px; width: 100%;"></div>
+                        <div class="col-md-6 col-lg-6"><!--Si se quiere CPU y RAM se ponen col-md-6-->
+                            <div id="chartContainer" style="height: 500px; width: 100%;"></div>
                         </div>
-                        <!--<div class="col-md-3 col-lg-3">
-                            <h3>CPU Consumed</h3>
-                            <canvas id="gauge1" class="center-block"></canvas>
-                            <h3>RAM Consumed</h3>
-                            <canvas id="gauge2" class="center-block"></canvas>
-                        </div>-->
+                        <div class="col-md-3 col-lg-3">
+                            <table class="table">
+                                <tr><th colspan="2">Shared Pool</th></tr>
+                                <tr><td><canvas id="sharedPool" class="center-block"></canvas></td><td id="sPtext"></td></tr>
+                                <tr><th colspan="2">Large Pool</th></tr>
+                                <tr><td><canvas id="largePool" class="center-block"></canvas></td><td id="lPtext"></td></tr>
+                                <tr><th colspan="2">Java Pool</th></tr>
+                                <tr><td><canvas id="javaPool" class="center-block"></canvas></td><td id="jPtext"></td></tr>
+                            </table>
+                        </div>
                     </div>
                 </div><!--Container-fluid-->
             </div><!-- /#page-wrapper -->

@@ -87,4 +87,12 @@ public class SGAData {
         this.largePoolUsed = largePoolUsed;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append(sharedPoolUsed).append(";").append(sharedPoolTotal).append(";")
+                .append(largePoolUsed).append(";").append(largePoolTotal).append(";")
+                .append(javaPoolUsed).append(";").append(javaPoolTotal);
+        return str.toString();
+    }
 }

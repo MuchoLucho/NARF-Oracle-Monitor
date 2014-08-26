@@ -28,6 +28,10 @@
         <servlet-name>Login</servlet-name>
         <servlet-class>Services.Login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>usersService</servlet-name>
+        <servlet-class>Services.usersService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SGAService</servlet-name>
         <url-pattern>/session/SGAService</url-pattern>
@@ -38,13 +42,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>tbsService</servlet-name>
-        <url-pattern>/tbsService</url-pattern>
+        <url-pattern>/session/tbsService</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>transactionService</servlet-name>
         <url-pattern>/session/transactionService</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>usersService</servlet-name>
+        <url-pattern>/session/usersService</url-pattern>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
