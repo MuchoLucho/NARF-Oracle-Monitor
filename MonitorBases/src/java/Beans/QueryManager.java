@@ -321,4 +321,35 @@ public class QueryManager {
 
     }
 
+    public DBValues getDBValues() {
+        PreparedStatement pst;
+        ResultSet rs;
+        String sql = "select \n"
+                + "v$log.group# GROUPNO,\n"
+                + "sequence#,\n"
+                + "bytes/1024 as SIZEKB,\n"
+                + "members NUMMEMBERS,\n"
+                + "archived,\n"
+                + "v$log.status,\n"
+                + "member FILEPATH \n"
+                + "from v$log, v$logfile where v$log.group#=v$logfile.GROUP#";
+        try {
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            String version="";
+            String instanceName="";
+            while (rs.next()) {
+                version = rs.getString("version");
+                instanceName = rs.getString("intsance_name");
+            }
+            pst.close();
+            rs.close();
+            return new DBValues(version, instanceName);
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+
 }

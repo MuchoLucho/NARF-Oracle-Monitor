@@ -32,6 +32,14 @@
         <servlet-name>usersService</servlet-name>
         <servlet-class>Services.usersService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>Services.Logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DBInfoService</servlet-name>
+        <servlet-class>Services.DBInfoService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SGAService</servlet-name>
         <url-pattern>/session/SGAService</url-pattern>
@@ -55,6 +63,14 @@
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DBInfoService</servlet-name>
+        <url-pattern>/DBInfoService</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

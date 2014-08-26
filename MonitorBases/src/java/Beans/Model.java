@@ -20,10 +20,11 @@ public class Model {
     public static Redos redos = new Redos();
     public static SGAData sgadata;
     public static QueryManager queryManager = new QueryManager();
-
+    public static DBValues dbvalues;
     public static void initMonitorTest() {
         //queryManager.connectDB("c##jota", "jota");//LOGIN PARAMETERS. Has another for more parameters.
         sgadata = queryManager.getSGAValues();
+        dbvalues = queryManager.getDBValues();
         queryManager.getLogInfo(redos);
         queryManager.getTablesInfo(tables);
         queryManager.getUsersInfo(users);

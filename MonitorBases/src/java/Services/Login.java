@@ -8,6 +8,7 @@ package Services;
 import Beans.Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +43,8 @@ public class Login extends HttpServlet {
         String port = request.getParameter("Port");
         if (Model.queryManager.connectDB(username, pass, hostName, port, SID)) {
             System.out.println("CONNECTED TO DATABASE WITH PARAMETERS FROM WEB");
-            Model.initMonitorTest();
-            Model.updateInfo();
+            Model.initMonitorTest();//Initializes values.
+            Model.updateInfo();//Calls the thread
             session.setAttribute("username", username);//Ya esta conectado.
 
             response.sendRedirect("session/dashboard.jsp");
@@ -57,8 +58,10 @@ public class Login extends HttpServlet {
              out.println("<h1>ESTAS CONECTADO UN APLAUSO BABY " + request.getContextPath() + "</h1>");
              out.println("</body>");
              out.println("</html>");*/
+        } else {
+            RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
+            rs.include(request, response);
         }
-
 
     }
 
