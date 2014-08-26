@@ -1,6 +1,7 @@
 var currentTBS = "nothing";
 var currentTable = "nothing";
-
+var sgaTimeLine = new Array();
+var sgaArray = [];
 function updateTBS() {
     var tbs = [];
     $.ajax({
@@ -64,8 +65,8 @@ function tablesText() {
             var tbsaux = document.getElementById("tablesText");
             tablesText.innerHTML = "<h4>Owner</h4><p>" + tbsaux[0] + "</p>" +
                     "<h4>Used Space</h4><p>" + tbsaux[1] + "</p><h4># Rows</h4>" +
-                    "<p>" + tbsaux[2] + "</p><h4>AVG Row Lenght</h4><p>"+tbsaux[3]+"</p>"+
-                    "<h4>Tablespace</h4><p>"+tbsaux[4]+"</p>";
+                    "<p>" + tbsaux[2] + "</p><h4>AVG Row Lenght</h4><p>" + tbsaux[3] + "</p>" +
+                    "<h4>Tablespace</h4><p>" + tbsaux[4] + "</p>";
             setTimeout(tablesText, 3000);
         }
     });
@@ -169,8 +170,8 @@ function tablesTBS() {
 }
 
 ////////////////SGA MONITOR///////////////////////////////////////////////////////////
-var sgaTimeLine = new Array();
-var sgaArray = [];
+
+
 function SGAMonitor() {
     var total = parseInt(sgaArray[1]) + parseInt(sgaArray[3]) + parseInt(sgaArray[5]);
     var used = parseInt(sgaArray[0]) + parseInt(sgaArray[2]) + parseInt(sgaArray[4]);
@@ -209,6 +210,7 @@ function updatePools() {
         success: function(response) {
             sgaArray = response.split(";");
             setTimeout(updatePools, 2000);
+
         }
     });
 }
@@ -237,13 +239,18 @@ function sharedPool() {
             fn: 'bounce'
         }
     });
+
     sharedPool.onready = function() {
         setInterval(function() {
             sharedPool.setValue(parseInt(parseInt(sgaArray[0]) * 100 / parseInt(sgaArray[1])));
+            var sPtext = document.getElementById("sPtext");
+            sPtext.innerHTML = "<strong>Mem Used: </strong>" + String(sgaArray[0]) + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[1] + " bytes";
+            sharedPool.draw();
         }, 2000);
     };
+
     var sPtext = document.getElementById("sPtext");
-    sPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[0] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[1] + " bytes";
+    sPtext.innerHTML = "<strong>Mem Used: </strong>" + String(sgaArray[0]) + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[1] + " bytes";
     sharedPool.draw();
 }
 
@@ -271,9 +278,13 @@ function largePool() {
             fn: 'bounce'
         }
     });
+    //alert("SGA Array before onready funct " + sgaArray);
     largePool.onready = function() {
         setInterval(function() {
             largePool.setValue(parseInt(parseInt(sgaArray[2]) * 100 / parseInt(sgaArray[3])));
+            var lPtext = document.getElementById("lPtext");
+            lPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[2] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[3] + " bytes";
+            largePool.draw();
         }, 2000);
     };
     var lPtext = document.getElementById("lPtext");
@@ -308,6 +319,9 @@ function javaPool() {
     javaPool.onready = function() {
         setInterval(function() {
             javaPool.setValue(parseInt(parseInt(sgaArray[4]) * 100 / parseInt(sgaArray[5])));
+            var jPtext = document.getElementById("jPtext");
+            jPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[4] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[5] + " bytes";
+            javaPool.draw();
         }, 2000);
     };
     var jPtext = document.getElementById("jPtext");
