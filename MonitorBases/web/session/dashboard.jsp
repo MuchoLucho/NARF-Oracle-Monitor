@@ -19,7 +19,8 @@
             SGAMonitor();
             sharedPool();
             largePool();
-            javaPool();">
+            javaPool();
+            datos();">
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -76,13 +77,10 @@
                     <div class="row">
                         <div class="col-md-3 col-sm-3 inverseBox">
                             <h3>General Information</h3>
-                            <h4>DB Name</h4><p>Database Name</p>
-                            <h4>Oracle Version</h4><p>Version</p>
+                            <span id="info"></span>
                             <hr/>
                             <h3>Database Health</h3>
-                            <h4>Status</h4><span class="health" id="health"></span>
-                            <h4>Cause</h4><p>Nothing</p>
-                            <h4>Recomendation</h4><p>Nothing</p>
+                            <h4>Status</h4><span class="health" id="health"></span>                            
                         </div>
                         <div class="col-md-6 col-lg-6"><!--Si se quiere CPU y RAM se ponen col-md-6-->
                             <div id="chartContainer" style="height: 500px; width: 100%;"></div>

@@ -84,16 +84,16 @@ function memTBS() {
             var tbsaux = response.split(";");
             tbsaux.pop();
             //for (i = 0; i < tbsaux.length; i += 2) {
-                memtbs.push({
-                    y: parseInt(tbsaux[0]),
-                    legendText: "USED",
-                    indexLabel: "#percent%"
-                });
-                memtbs.push({
-                    y: parseInt(tbsaux[1]),
-                    legendText: "REMAINING",
-                    indexLabel: "#percent%"
-                });
+            memtbs.push({
+                y: parseInt(tbsaux[0]),
+                legendText: "USED",
+                indexLabel: "#percent%"
+            });
+            memtbs.push({
+                y: parseInt(tbsaux[1]),
+                legendText: "REMAINING",
+                indexLabel: "#percent%"
+            });
             //}
             var chart = new CanvasJS.Chart("memoryChart", {
                 title: {
@@ -412,6 +412,21 @@ function genRedos() {
         },
         error: function(response) {
             especifico.innerHTML = "Unespected error: " + response; //Show Errors
+        }
+    });
+}
+
+/////////////////////////////////////////BD Data//////////////////
+
+function datos() {
+    $.ajax({
+        url: 'DBInfoService',
+        dataType: 'text',
+        success: function(response) {
+            res = response.split(";");
+            var info = document.getElementById("info");
+            info.innerHTML = "<h4>DB Name</h4><p>" + res[0] + "</p><h4>Oracle Version</h4><p>" + res[1] + "</p>";
+
         }
     });
 }

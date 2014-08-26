@@ -324,15 +324,7 @@ public class QueryManager {
     public DBValues getDBValues() {
         PreparedStatement pst;
         ResultSet rs;
-        String sql = "select \n"
-                + "v$log.group# GROUPNO,\n"
-                + "sequence#,\n"
-                + "bytes/1024 as SIZEKB,\n"
-                + "members NUMMEMBERS,\n"
-                + "archived,\n"
-                + "v$log.status,\n"
-                + "member FILEPATH \n"
-                + "from v$log, v$logfile where v$log.group#=v$logfile.GROUP#";
+        String sql = "select version, instance_name from v$instance";
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -340,7 +332,7 @@ public class QueryManager {
             String instanceName="";
             while (rs.next()) {
                 version = rs.getString("version");
-                instanceName = rs.getString("intsance_name");
+                instanceName = rs.getString("instance_name");
             }
             pst.close();
             rs.close();
