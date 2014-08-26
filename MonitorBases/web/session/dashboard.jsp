@@ -15,7 +15,10 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body onload="SGAMonitor();sharedPool();largePool();javaPool();">
+    <body onload="SGAMonitor();
+            sharedPool();
+            largePool();
+            javaPool();">
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -94,13 +97,14 @@
                             <div id="chartContainer" style="height: 500px; width: 100%;"></div>
                         </div>
                         <div class="col-md-3 col-lg-3">
-                            <h3>Shared Pool</h3>
-                            <canvas id="sharedPool" class="center-block"></canvas>
-                            <h3>Large Pool</h3>
-                            <canvas id="largePool" class="center-block"></canvas>
-                            <h3>Java Pool</h3>
-                            <canvas id="javaPool" class="center-block"></canvas>
-                            <h5></h5>
+                            <table class="table">
+                                <tr><th colspan="2">Shared Pool</th></tr>
+                                <tr><td><canvas id="sharedPool" class="center-block"></canvas></td><td id="sPtext"></td></tr>
+                                <tr><th colspan="2">Large Pool</th></tr>
+                                <tr><td><canvas id="largePool" class="center-block"></canvas></td><td id="lPtext"></td></tr>
+                                <tr><th colspan="2">Java Pool</th></tr>
+                                <tr><td><canvas id="javaPool" class="center-block"></canvas></td><td id="jPtext"></td></tr>
+                            </table>
                         </div>
                     </div>
                 </div><!--Container-fluid-->

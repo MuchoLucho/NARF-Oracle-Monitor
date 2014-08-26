@@ -1,8 +1,25 @@
-/////////////TABLESPACES/////////////////////////////////////////////////////////////
-var actualTBS = "";
-function TBS() {
-    var chart = new CanvasJS.Chart("mainChart",
-            {
+var currentTBS = "nothing";
+var currentTable = "nothing";
+
+function updateTBS() {
+    var tbs = [];
+    $.ajax({
+        url: 'tbsService',
+        dataType: 'text',
+        data: {
+            update: 'update'
+        },
+        success: function(response) {
+            var tbsaux = response.split(";");
+            tbsaux.pop();
+            for (i = 0; i < tbsaux.length; i += 2) {
+                tbs.push({
+                    y: parseInt(tbsaux[i + 1]),
+                    legendText: tbsaux[i],
+                    indexLabel: "#percent%"
+                });
+            }
+            var chart = new CanvasJS.Chart("mainChart", {
                 title: {
                     text: "Tablespaces"
                 },
@@ -21,21 +38,58 @@ function TBS() {
                         startAngle: -20,
                         showInLegend: true,
                         toolTipContent: "{legendText}: {y} KB",
-                        dataPoints: [
-                            {y: 80.24, legendText: "Google", indexLabel: "#percent%"},
-                            {y: 8.16, legendText: "Yahoo!", indexLabel: "#percent%"},
-                            {y: 4.67, legendText: "Bing", indexLabel: "#percent%"},
-                            {y: 0.98, legendText: "Others", indexLabel: "#percent%"}
-                        ]
+                        dataPoints: tbs,
+                        click: function(e) {
+                            currentTBS = e.dataPoint.legendText;
+                        }
                     }
                 ]
             });
-    chart.render();
-    setTimeout(actualTBS, 3000);
+            chart.render();
+            tbs = [];
+            setTimeout(updateTBS, 3000);
+        }
+    });
 }
+
+function tablesText() {
+    $.ajax({
+        url: 'tbsService',
+        dataType: 'text',
+        data: {
+            text: currentTable
+        },
+        success: function(response) {
+            var ar = response.split(";");
+            var tbsaux = document.getElementById("tablesText");
+            tablesText.innerHTML = "<h4>Owner</h4><p>" + tbsaux[0] + "</p>" +
+                    "<h4>Used Space</h4><p>" + tbsaux[1] + "</p><h4># Rows</h4>" +
+                    "<p>" + tbsaux[2] + "</p><h4>AVG Row Lenght</h4><p>"+tbsaux[3]+"</p>"+
+                    "<h4>Tablespace</h4><p>"+tbsaux[4]+"</p>";
+            setTimeout(tablesText, 3000);
+        }
+    });
+}
+
 function memTBS() {
-    var chart = new CanvasJS.Chart("memoryChart",
-            {
+    var memtbs = [];
+    $.ajax({
+        url: 'tbsService',
+        dataType: 'text',
+        data: {
+            mem: currentTBS
+        },
+        success: function(response) {
+            var tbsaux = response.split(";");
+            tbsaux.pop();
+            for (i = 0; i < tbsaux.length; i += 2) {
+                memtbs.push({
+                    y: parseInt(tbsaux[i + 1]),
+                    legendText: tbsaux[i],
+                    indexLabel: "#percent%"
+                });
+            }
+            var chart = new CanvasJS.Chart("memoryChart", {
                 title: {
                     text: "Ramaining Space"
                 },
@@ -46,29 +100,47 @@ function memTBS() {
                     fontSize: 20,
                     fontFamily: "Helvetica"
                 },
-                data: [
-                    {
+                data: [{
                         type: "pie",
                         indexLabelFontFamily: "Garamond",
                         indexLabelFontSize: 20,
                         startAngle: -20,
                         showInLegend: true,
                         toolTipContent: "{legendText}: {y} KB",
-                        dataPoints: [
-                            {y: 80.24, legendText: "Google", indexLabel: "#percent%"},
-                            {y: 8.16, legendText: "Yahoo!", indexLabel: "#percent%"},
-                            {y: 4.67, legendText: "Bing", indexLabel: "#percent%"},
-                            {y: 0.98, legendText: "Others", indexLabel: "#percent%"}
-                        ]
-                    }
-                ]
+                        dataPoints: memtbs
+                    }]
             });
-    chart.render();
-    setTimeout(memTBS, 3000);
+            chart.render();
+            var memText = document.getElementById("memText");
+            memText.innerHTML = "<h4>Memory Used</h4><p>" + tbsaux[0] + "</p>" +
+                    "<h4>Total Memory</h4><p>" + tbsaux[1] + "</p><h4>Location</h4>" +
+                    "<p>" + tbsaux[2] + "</p>";
+            memtbs = [];
+            setTimeout(memTBS, 3000);
+        }
+    });
 }
+
 function tablesTBS() {
-    var chart = new CanvasJS.Chart("tablesChart",
-            {
+    var tablestbs = [];
+    $.ajax({
+        url: 'tbsService',
+        dataType: 'text',
+        data: {
+            tables: currentTBS
+        },
+        success: function(response) {
+            var tbsaux = response.split(";");
+            tbsaux.pop();
+            for (i = 0; i < tbsaux.length; i += 2) {
+                num = parseInt(tbsaux[i + 1]);
+                tablestbs.push({
+                    y: num,
+                    legendText: tbsaux[i],
+                    indexLabel: "#percent%"
+                });
+            }
+            var chart = new CanvasJS.Chart("tablesChart", {
                 title: {
                     text: "Tables"
                 },
@@ -79,76 +151,63 @@ function tablesTBS() {
                     fontSize: 20,
                     fontFamily: "Helvetica"
                 },
-                data: [
-                    {
+                data: [{
                         type: "pie",
                         indexLabelFontFamily: "Garamond",
                         indexLabelFontSize: 20,
                         startAngle: -20,
                         showInLegend: true,
                         toolTipContent: "{legendText}: {y} KB",
-                        dataPoints: [
-                            {y: 80.24, legendText: "Google", indexLabel: "#percent%"},
-                            {y: 8.16, legendText: "Yahoo!", indexLabel: "#percent%"},
-                            {y: 4.67, legendText: "Bing", indexLabel: "#percent%"},
-                            {y: 0.98, legendText: "Others", indexLabel: "#percent%"}
-                        ]
-                    }
-                ]
+                        dataPoints: tablestbs
+                    }]
             });
-    chart.render();
-    setTimeout(tablesTBS, 3000);
-}
-
-////////////////SGA MONITOR///////////////////////////////////////////////////////////
-var sgaTimeLine = new Array();
-function SGAMonitor() {
-    $.ajax({
-        url: 'SGAService',
-        dataType: 'text',
-        success: function(response) {
-            sgaTimeLine.push({x: new Date(), y: Math.round(parseInt(response))});
-            var chart = new CanvasJS.Chart("chartContainer",
-                    {
-                        title: {text: "SGA Usage"},
-                        axisX: {
-                            labelAngle: 45,
-                            valueFormatString: "HH:mm:ss",
-                            title: "Time"
-                        },
-                        axisY: {title: "% SGA Consumed"},
-                        data: [
-                            {
-                                color: "rgb(175, 0, 0)",
-                                type: "area",
-                                dataPoints: sgaTimeLine
-                            }
-                        ]
-                    });
             chart.render();
-            if (sgaTimeLine.length > 60)
-                sgaTimeLine.shift();
-            setTimeout(SGAMonitor, 2000);
+            tablestba = [];
+            setTimeout(tablesTBS, 3000);
         }
     });
 }
 
-/*
- private int javaPoolTotal;
- private int sharedPoolTotal;
- private int largePoolTotal;
- private int javaPoolUsed;
- private int sharedPoolUsed;
- private int largePoolUsed;
- */
-var sgaArray= [];
+////////////////SGA MONITOR///////////////////////////////////////////////////////////
+var sgaTimeLine = new Array();
+var sgaArray = [];
+function SGAMonitor() {
+    var total = parseInt(sgaArray[1]) + parseInt(sgaArray[3]) + parseInt(sgaArray[5]);
+    var used = parseInt(sgaArray[0]) + parseInt(sgaArray[2]) + parseInt(sgaArray[4]);
+    sgaTimeLine.push({
+        x: new Date(),
+        y: Math.round(used * 100 / total)
+    });
+    var chart = new CanvasJS.Chart("chartContainer", {
+        title: {
+            text: "SGA Usage"
+        },
+        axisX: {
+            labelAngle: 45,
+            valueFormatString: "HH:mm:ss",
+            title: "Time"
+        },
+        axisY: {
+            title: "% SGA Consumed"
+        },
+        data: [{
+                color: "rgb(175, 0, 0)",
+                type: "area",
+                dataPoints: sgaTimeLine
+            }]
+    });
+    chart.render();
+    if (sgaTimeLine.length > 60)
+        sgaTimeLine.shift();
+    setTimeout(SGAMonitor, 2000);
+}
+
 function updatePools() {
     $.ajax({
         url: 'SGAService',
         dataType: 'text',
         success: function(response) {
-            sgaArray=response.split(";");
-            sgaArray.pop();
+            sgaArray = response.split(";");
             setTimeout(updatePools, 2000);
         }
     });
@@ -180,17 +239,19 @@ function sharedPool() {
     });
     sharedPool.onready = function() {
         setInterval(function() {
-            sharedPool.setValue(Math.random() * 100);
+            sharedPool.setValue(parseInt(parseInt(sgaArray[0]) * 100 / parseInt(sgaArray[1])));
         }, 2000);
     };
+    var sPtext = document.getElementById("sPtext");
+    sPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[0] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[1] + " bytes";
     sharedPool.draw();
 }
 
 function largePool() {
     var largePool = new Gauge({
         renderTo: 'largePool',
-        width: 150,
-        height: 150,
+        width: 100,
+        height: 100,
         glow: true,
         units: '% Consumed',
         title: 'Large Pool',
@@ -212,16 +273,19 @@ function largePool() {
     });
     largePool.onready = function() {
         setInterval(function() {
-            largePool.setValue(Math.random() * 100);
+            largePool.setValue(parseInt(parseInt(sgaArray[2]) * 100 / parseInt(sgaArray[3])));
         }, 2000);
     };
+    var lPtext = document.getElementById("lPtext");
+    lPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[2] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[3] + " bytes";
     largePool.draw();
 }
+
 function javaPool() {
     var javaPool = new Gauge({
         renderTo: 'javaPool',
-        width: 150,
-        height: 150,
+        width: 100,
+        height: 100,
         glow: true,
         units: '% Consumed',
         title: 'Java Pool',
@@ -243,38 +307,40 @@ function javaPool() {
     });
     javaPool.onready = function() {
         setInterval(function() {
-            javaPool.setValue(Math.random() * 100);
+            javaPool.setValue(parseInt(parseInt(sgaArray[4]) * 100 / parseInt(sgaArray[5])));
         }, 2000);
     };
+    var jPtext = document.getElementById("jPtext");
+    jPtext.innerHTML = "<strong>Mem Used: </strong>" + sgaArray[4] + " bytes<br/><strong>Total Mem: </strong>" + sgaArray[5] + " bytes";
     javaPool.draw();
 }
 
-////////////////TRANSACTION MONITOR//////////////////////////////////////////////////
+////////////////TRANSACTION MONITOR////////////////////////////////////////////////////
 
 var transArray = new Array();
 function TransMonitor() {
-    transArray.push({x: new Date(), y: Math.round(Math.random() * 100)});
-    var chart = new CanvasJS.Chart("chartContainer",
-            {
-                title: {
-                    text: "Transactions for a X time"
-                },
-                axisX: {
-                    labelAngle: 45,
-                    valueFormatString: "HH:mm:ss",
-                    title: "Time"
-                },
-                axisY: {
-                    title: "Transactions"
-                },
-                data: [
-                    {
-                        color: "rgb(0, 175, 0)",
-                        type: "area",
-                        dataPoints: transArray
-                    }
-                ]
-            });
+    transArray.push({
+        x: new Date(),
+        y: Math.round(Math.random() * 100)
+    });
+    var chart = new CanvasJS.Chart("chartContainer", {
+        title: {
+            text: "Transactions"
+        },
+        axisX: {
+            labelAngle: 45,
+            valueFormatString: "HH:mm:ss",
+            title: "Time"
+        },
+        axisY: {
+            title: "Transactions"
+        },
+        data: [{
+                color: "rgb(0, 175, 0)",
+                type: "area",
+                dataPoints: transArray
+            }]
+    });
     chart.render();
     if (transArray.length > 60)
         transArray.shift();
@@ -288,13 +354,16 @@ var logSelected = 0; //Indicates the selected group
 function changeSelectedLog(i) {
     logSelected = parseInt(i);
 }
+
 function selectedRedo() {
     var especifico = document.getElementById("especifico");
     var str = "";
     var res = [];
     $.ajax({
         url: 'redoService',
-        data: {type: String(logSelected)},
+        data: {
+            type: String(logSelected)
+        },
         dataType: 'text',
         success: function(response) {
             if (response === "nothing") {
@@ -318,13 +387,16 @@ function selectedRedo() {
         }
     });
 }
+
 function genRedos() {
     var especifico = document.getElementById("general");
     var str = "";
     var res = [];
     $.ajax({
         url: 'redoService',
-        data: {type: 'update'},
+        data: {
+            type: 'update'
+        },
         dataType: 'text',
         success: function(response) {
             res = response.split(";");

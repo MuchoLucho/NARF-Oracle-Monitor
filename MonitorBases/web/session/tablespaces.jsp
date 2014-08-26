@@ -15,7 +15,9 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body onload="TBS();memTBS();tablesTBS()">
+    <body onload="updateTBS();
+            memTBS();
+            tablesTBS()">
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -83,12 +85,15 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div id="mainChart" style="height: 450px; width: 100%;"></div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div id="tablesChart" style="height: 450px; width: 100%;"></div>
+                            <br/><h2 style="text-align: center">Select a slice (tablespace) above to view the information</h2>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div id="memoryChart" style="height: 450px; width: 100%;"></div>
+                            <span id="memText"></span>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div id="tablesChart" style="height: 450px; width: 100%;"></div>
+                            <span id="tablesText"></span>
                         </div>
                     </div>
                 </div> <!--Container-fluid-->
