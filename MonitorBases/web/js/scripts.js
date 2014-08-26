@@ -83,13 +83,18 @@ function memTBS() {
         success: function(response) {
             var tbsaux = response.split(";");
             tbsaux.pop();
-            for (i = 0; i < tbsaux.length; i += 2) {
+            //for (i = 0; i < tbsaux.length; i += 2) {
                 memtbs.push({
-                    y: parseInt(tbsaux[i + 1]),
-                    legendText: tbsaux[i],
+                    y: parseInt(tbsaux[0]),
+                    legendText: "USED",
                     indexLabel: "#percent%"
                 });
-            }
+                memtbs.push({
+                    y: parseInt(tbsaux[1]),
+                    legendText: "REMAINING",
+                    indexLabel: "#percent%"
+                });
+            //}
             var chart = new CanvasJS.Chart("memoryChart", {
                 title: {
                     text: "Ramaining Space"
@@ -163,7 +168,7 @@ function tablesTBS() {
                     }]
             });
             chart.render();
-            tablestba = [];
+            tablestbs = [];
             setTimeout(tablesTBS, 3000);
         }
     });

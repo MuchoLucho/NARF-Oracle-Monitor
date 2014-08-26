@@ -166,8 +166,7 @@ public class QueryManager {
         String sql = "select owner,table_name,tablespace_name,num_rows,avg_row_len\n"
                 + "from dba_tables\n"
                 + "where \n"
-                + "TABLESPACE_NAME NOT LIKE '%SYS%'\n"
-                + "AND OWNER NOT LIKE '%SYS%'";
+                + "TABLESPACE_NAME NOT LIKE '%SYS%'\n";
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
