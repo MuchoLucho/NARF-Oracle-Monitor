@@ -24,8 +24,8 @@ public class Tablespaces {
             values.setTamTotal(totalSize);
             values.setTamUsado(usedSpace);
             values.setDirDBF(dirDBF);
-        } else{
-            values = new TBSValues(state,totalSize,usedSpace,dirDBF);
+        } else {
+            values = new TBSValues(state, totalSize, usedSpace, dirDBF);
             nombres.add(name);
         }
         hashTBS.put(name, values);//No se si se ocupa para el primer caso.
@@ -44,5 +44,5 @@ public class Tablespaces {
         str.append(hashTBS.get(n).getTamUsado()).append(";").append(hashTBS.get(n).getTamTotal())
                 .append(";").append(hashTBS.get(n).getDirDBF()).append(";");
         return str.toString();
-    }   
+    }
 }

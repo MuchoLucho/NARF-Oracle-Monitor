@@ -40,23 +40,25 @@ public class Login extends HttpServlet {
         String SID = request.getParameter("SID");
         String hostName = request.getParameter("HostName");
         String port = request.getParameter("Port");
-        if(Model.queryManager.connectDB(username,pass,hostName,port,SID)){
+        if (Model.queryManager.connectDB(username, pass, hostName, port, SID)) {
             System.out.println("CONNECTED TO DATABASE WITH PARAMETERS FROM WEB");
+            Model.initMonitorTest();
+            Model.updateInfo();
             session.setAttribute("username", username);//Ya esta conectado.
             response.sendRedirect("session/dashboard.jsp");
             /*PrintWriter out = response.getWriter();
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>ESTAS CONECTADO UN APLAUSO BABY</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>ESTAS CONECTADO UN APLAUSO BABY " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");*/
+             out.println("<!DOCTYPE html>");
+             out.println("<html>");
+             out.println("<head>");
+             out.println("<title>ESTAS CONECTADO UN APLAUSO BABY</title>");
+             out.println("</head>");
+             out.println("<body>");
+             out.println("<h1>ESTAS CONECTADO UN APLAUSO BABY " + request.getContextPath() + "</h1>");
+             out.println("</body>");
+             <<<<<<< HEAD
+             out.println("</html>");*/
         }
 
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

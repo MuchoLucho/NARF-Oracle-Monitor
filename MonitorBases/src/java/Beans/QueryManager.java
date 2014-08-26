@@ -18,14 +18,15 @@ import oracle.jdbc.OracleResultSet;
 public class QueryManager {
 
     private static Connection con = null;/*Estatico. Por el momento solo se permite conexion a una sola base.*/
+
     String conDir = null;
 
     public boolean isConnected() {
         return con != null;
     }
-    
-    public boolean DBParametersSet(){
-        return conDir!=null;
+
+    public boolean DBParametersSet() {
+        return conDir != null;
     }
 
     public boolean connectDB(String user, String pass) {
@@ -67,20 +68,20 @@ public class QueryManager {
         return true;
     }
 
-    public static void getTBSpacesInfo(Tablespaces tbSpaces) {
+    public void getTBSpacesInfo(Tablespaces tbSpaces) {
         PreparedStatement pst;
         ResultSet rs;
-        String sql = "Select t.tablespace_name \"Tablespace\", t.status \"Estado\","
-                + "ROUND(MAX(d.bytes)/1024/1024,2) \"MB Tamaño\","
-                + "ROUND((MAX(d.bytes)/1024/1024) -"
-                + "(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024),2) \"MB Usados\","
-                + "ROUND(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024,2) \"MB Libres\","
-                + "t.pct_increase \"% incremento\","
-                + "SUBSTR(d.file_name,1,80) \"DireccionDBF\""
-                + "FROM DBA_FREE_SPACE f, DBA_DATA_FILES d, DBA_TABLESPACES t"
-                + "WHERE t.tablespace_name = d.tablespace_name AND"
-                + "f.tablespace_name(+) = d.tablespace_name"
-                + "AND f.file_id(+) = d.file_id GROUP BY t.tablespace_name,"
+        String sql = "SELECT t.tablespace_name \"Tablespace\", t.status \"Estado\",\n"
+                + "ROUND(MAX(d.bytes)/1024/1024,2) \"MB Tamaño\",\n"
+                + "ROUND((MAX(d.bytes)/1024/1024) -\n"
+                + "(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024),2) \"MB Usados\",\n"
+                + "ROUND(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024,2) \"MB Libres\",\n"
+                + "t.pct_increase \"% incremento\",\n"
+                + "SUBSTR(d.file_name,1,80) \"DireccionDBF\"\n"
+                + "FROM DBA_FREE_SPACE f, DBA_DATA_FILES d, DBA_TABLESPACES t\n"
+                + "WHERE t.tablespace_name = d.tablespace_name AND\n"
+                + "f.tablespace_name(+) = d.tablespace_name\n"
+                + "AND f.file_id(+) = d.file_id GROUP BY t.tablespace_name,\n"
                 + "d.file_name, t.pct_increase, t.status ORDER BY 1,3 DESC";
         try {
             pst = con.prepareStatement(sql);
@@ -92,7 +93,10 @@ public class QueryManager {
                 int tamUsado = rs.getInt("MB Usados");
                 String dirDBF = rs.getString("DireccionDBF");
                 tbSpaces.updateTBS(nombre, estado, tamTotal, tamUsado, dirDBF);
+
             }
+            pst.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,7 +150,10 @@ public class QueryManager {
                 String tempTBS = rs.getString("temporary_tablespace");
                 String status = rs.getString("ACCOUNT_STATUS");
                 users.updateUsers(username, defaultTBS, tempTBS, status);
+
             }
+            pst.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -170,10 +177,13 @@ public class QueryManager {
                 String TBSName = rs.getString("tablespace_name");
                 int numRows = rs.getInt("num_rows");
                 int avgRowlen = rs.getInt("avg_row_len");
-                float tamTabla = (float) 1337.69; //WORK IN PROGRESS.
+                float tamTabla = (float) avgRowlen * numRows / 1024; //WORK IN PROGRESS.
                 //float tamTabla = this.getTableSize(name);
                 tables.updateTables(name, owner, tamTabla, numRows, numRows, TBSName);
+
             }
+            pst.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -194,6 +204,8 @@ public class QueryManager {
                 used[i] = rs.getInt("USED");
                 i++;
             }
+            pst.close();
+            rs.close();
             return new SGAData(total[0], total[2], total[1], used[0], used[2], used[1]);
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -214,8 +226,7 @@ public class QueryManager {
                 + "WHERE\n"
                 + "    f.name = 'free memory'\n"
                 + "  AND f.pool = s.pool\n"
-                + "ORDER BY POOLNAME\n"
-                + "  ;";
+                + "ORDER BY POOLNAME\n";
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -228,7 +239,8 @@ public class QueryManager {
                 i++;
             }
             sgadata.updateValues(total[0], total[2], total[1], used[0], used[2], used[1]);
-
+            pst.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -267,6 +279,8 @@ public class QueryManager {
                 redos.insertRedo(groupNum, sequenceNum, sizeKB, members, archived, status, filePath);
 
             }
+            pst.close();
+            rs.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -285,7 +299,7 @@ public class QueryManager {
                 + "archived,\n"
                 + "v$log.status,\n"
                 + "member FILEPATH \n"
-                + "from v$log, v$logfile where v$log.group#=v$logfile.GROUP#;";
+                + "from v$log, v$logfile where v$log.group#=v$logfile.GROUP#";
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -300,7 +314,8 @@ public class QueryManager {
                 redos.updateRedo(groupNum, sequenceNum, members, archived, status);
 
             }
-
+            pst.close();
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
         }
