@@ -33,7 +33,7 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(5);
+        session.setMaxInactiveInterval(-1);
 
         String username = request.getParameter("Username");
         String pass = request.getParameter("Password");
@@ -43,7 +43,8 @@ public class Login extends HttpServlet {
         if(Model.queryManager.connectDB(username,pass,hostName,port,SID)){
             System.out.println("CONNECTED TO DATABASE WITH PARAMETERS FROM WEB");
             session.setAttribute("username", username);//Ya esta conectado.
-            PrintWriter out = response.getWriter();
+            response.sendRedirect("session/dashboard.jsp");
+            /*PrintWriter out = response.getWriter();
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -52,7 +53,7 @@ public class Login extends HttpServlet {
             out.println("<body>");
             out.println("<h1>ESTAS CONECTADO UN APLAUSO BABY " + request.getContextPath() + "</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>");*/
         }
 
         

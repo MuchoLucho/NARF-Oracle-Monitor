@@ -76,7 +76,7 @@ public class LoginFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession();
         try {
-            if(session.getAttribute("usuario")==null){//Not connected
+            if(session.getAttribute("username")==null){//Not connected
                  httpResponse.sendRedirect("/MonitorBases/index.jsp"); 
             }
             else
