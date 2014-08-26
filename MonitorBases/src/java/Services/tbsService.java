@@ -1,5 +1,6 @@
 package Services;
 
+import Beans.Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,16 +16,16 @@ public class tbsService extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             if (request.getParameter("update").equals("update"))//update: 'update'           
             {
-                //out.println(OBJTablespaces.toStringList());
+                out.println(Model.tablespaces.toStringList());
             } else if (request.getParameter("update") != null && !request.getParameter("update").equals("nothing"))//text: currentTable {
             {
-                //out.println(OBJ.tablaSeleccionada(request.getParameter("update")));
+                out.print(Model.tables.tablaSeleccionada(request.getParameter("update")));
             } else if (request.getParameter("mem") != null && !request.getParameter("mem").equals("nothing"))// mem: currentTBS
             {
-                //out.println(OBJ.toStringTablespace(request.getParameter("mem"))):
+                out.print(Model.tablespaces.toStringTablespace(request.getParameter("mem")));
             } else if (request.getParameter("tables") != null && !request.getParameter("tables").equals("nothing")) //tables: currentTBS
             {
-                //out.println(OBJ.allTables(request.getParameter("tables")));
+                out.print(Model.tables.allTables(request.getParameter("tables")));
             }
         }
     }

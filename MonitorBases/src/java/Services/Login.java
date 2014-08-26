@@ -53,7 +53,16 @@ public class Login extends HttpServlet {
             out.println("<h1>ESTAS CONECTADO UN APLAUSO BABY " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        }
+        }else{PrintWriter out = response.getWriter();
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>NO ESTAS CONECTADO UN APLAUSO BABY</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>NO ESTAS CONECTADO UN APLAUSO BABY " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");}
 
         
     }
