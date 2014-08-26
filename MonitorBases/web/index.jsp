@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="row">
-                <form class="col-md-12" action="Login" method="get">
+                <form class="col-md-12" action="Login" method="post">
                     <h1 style="color: white">Change Connection Parameters</h1>
                     <h2 style="color: white">Database Information</h2>
                     <div class="form-group">
@@ -47,7 +47,6 @@
                     <div class='form-group'>
                         <button class='btn btn-primary btn-lg btn-block btn-danger' type='submit'>Log In</button>
                         <!--<h4 style="color: red">Changing the connection parameters may alter the previous information found if exists</h4>-->
-                        <a class='btn btn-primary btn-lg btn-block btn-danger' href='session/dashboard.jsp'>Change</a>
                         <button class='btn btn-primary btn-lg btn-block btn-default' type="reset">Clean</button>
                     </div>
                 </form><br/><br/>
