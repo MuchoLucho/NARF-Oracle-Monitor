@@ -18,7 +18,15 @@ import oracle.jdbc.OracleResultSet;
 public class QueryManager {
 
     private static Connection con = null;/*Estatico. Por el momento solo se permite conexion a una sola base.*/
+    String conDir = null;
 
+    public boolean isConnected() {
+        return con != null;
+    }
+    
+    public boolean DBParametersSet(){
+        return conDir!=null;
+    }
 
     public boolean connectDB(String user, String pass) {
         try {
@@ -26,19 +34,29 @@ public class QueryManager {
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", user, pass);
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
+            con = null;
             return false;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
+            con = null;
             return false;
         }
         return true;
     }
-    
-    public boolean connectDB(String user, String pass,String address,String port,String instanceName) {
+
+    public String getConDir() {
+        return conDir;
+    }
+
+    public void setConDir(String conDir) {
+        this.conDir = conDir;
+    }
+
+    public boolean connectDB(String user, String pass, String address, String port, String instanceName) {
         try {
-            String conAddr = "jdbc:oracle:thin:@"+address+":"+port+":"+instanceName;
+            conDir = "jdbc:oracle:thin:@" + address + ":" + port + ":" + instanceName;
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection(conAddr, user, pass);
+            con = DriverManager.getConnection(conDir, user, pass);
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;

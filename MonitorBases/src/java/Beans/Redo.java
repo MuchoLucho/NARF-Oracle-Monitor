@@ -20,7 +20,7 @@ public class Redo {
     }
 
     @Override
-    public String toString() {
+    public String toString() {//All values
         StringBuilder str = new StringBuilder();
         str.append(sequence).append(";");
         str.append(kb).append(";");
@@ -86,7 +86,7 @@ public class Redo {
 
     public void appendPath(String s) {
         if(path!=null)
-            path.concat("\n" + s);
+            path.concat(s+"<br/>");
         else{
             path=s;
         }

@@ -24,6 +24,10 @@
         <servlet-name>transactionService</servlet-name>
         <servlet-class>Services.transactionService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>Services.Login</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SGAService</servlet-name>
         <url-pattern>/session/SGAService</url-pattern>
@@ -40,9 +44,13 @@
         <servlet-name>transactionService</servlet-name>
         <url-pattern>/session/transactionService</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            0
         </session-timeout>
     </session-config>
 </web-app>

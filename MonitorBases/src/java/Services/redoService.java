@@ -1,5 +1,6 @@
 package Services;
 
+import Beans.Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,12 +13,15 @@ public class redoService extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            if (request.getParameter("type").equals("update")) {
-                out.print("2;active;2;1;current;1;");
-            } else if (!request.getParameter("type").equals("0")) {
-                out.print("6;6;6;1;1;1");
+            if (request.getParameter("type").equals("update")) {//First call,general
+                //out.print("2;active;2;1;current;1;");
+                out.print(Model.redos.toString());
+            } else if (!request.getParameter("type").equals("0")) {//Specific group
+                int needed = Integer.parseInt(request.getParameter("type"));
+                out.print(Model.redos.getRedo(needed).toString());
+                //out.print("6;6;6;1;1;1");
             }
-            if (request.getParameter("type").equals("0")) {
+            if (request.getParameter("type").equals("0")) {//No group at all
                 out.print("nothing");
             }
         }

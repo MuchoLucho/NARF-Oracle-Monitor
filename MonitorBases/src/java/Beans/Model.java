@@ -11,12 +11,12 @@ package Beans;
  */
 public class Model  {
 
-    private static Tablespaces tablespaces = new Tablespaces();
-    private static Tables tables = new Tables();
-    private static Users users = new Users();
-    private static Redos redos = new Redos();
-    private static SGAData sgadata;
-    private static QueryManager queryManager = new QueryManager();
+    public static Tablespaces tablespaces = new Tablespaces();
+    public static Tables tables = new Tables();
+    public static Users users = new Users();
+    public static Redos redos = new Redos();
+    public static SGAData sgadata;
+    public static QueryManager queryManager = new QueryManager();
 
     public static void initMonitorTest() {
         queryManager.connectDB("c##jota", "jota");//LOGIN PARAMETERS. Has another for more parameters.
@@ -30,6 +30,8 @@ public class Model  {
     public static void main(String[] args) {
         Model.initMonitorTest();
     }
+    
+    
 
    
 

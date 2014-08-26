@@ -16,7 +16,8 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body>        
+    <body>
+        <jsp:useBean id="mod" class="Beans.Model" scope="session"></jsp:useBean> 
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -25,24 +26,29 @@
                 </div>
             </div>
             <div class="row">
-                <form class="col-md-12" action="#" method="get">
-                    <h2 style="color: white">User Information</h2>
+                <form class="col-md-12" action="Login" method="get">
+                    <h1 style="color: white">Change Connection Parameters</h1>
+                    <h2 style="color: white">Database Information</h2>
                     <div class="form-group">
-                        <input type="text" class="form-control input-lg" placeholder="Username" name="user">
+                        <input type="text" class="form-control input-lg" placeholder="Username" name="Username">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control input-lg" placeholder="Password" name="password">
+                        <input type="password" class="form-control input-lg" placeholder="Password" name="Password">
                     </div>
-                    <%if (1 == 1)//Comprobación de que el monitor está conectado o no
-                        out.print("<h2 style='color: white'>Database Information</h2><div class='form-group'><input"
-                                + " type='text' class='form-control input-lg' placeholder='SID'></div><div class='form-group'"
-                                + "><input type='text' class='form-control input-lg' placeholder='Host Name'></div><div class="
-                                + "'form-group'><input type='text' class='form-control input-lg' placeholder='Port'></div><div"
-                                + " class='form-group'><input type='hidden' value='db' name='db'></div>");
-                    %>
                     <div class='form-group'>
-                        <!--<button class='btn btn-primary btn-lg btn-block btn-danger' type='submit'>Log In</button>-->
-                        <a class='btn btn-primary btn-lg btn-block btn-danger' href='session/dashboard.jsp'>Log In</a>
+                        <input type='text' class='form-control input-lg' placeholder='SID' name='SID'>
+                    </div>
+                    <div class='form-group'>
+                        <input type='text' class='form-control input-lg' placeholder='Host Name' name='HostName'>
+                    </div>
+                    <div class='form-group'>
+                        <input type='text' class='form-control input-lg' placeholder='Port' name='Port'>
+                    </div>
+                    <div class='form-group'>
+                        <button class='btn btn-primary btn-lg btn-block btn-danger' type='submit'>Log In</button>
+                        <!--<h4 style="color: red">Changing the connection parameters may alter the previous information found if exists</h4>-->
+                        <a class='btn btn-primary btn-lg btn-block btn-danger' href='session/dashboard.jsp'>Change</a>
+                        <button class='btn btn-primary btn-lg btn-block btn-default' type="reset">Clean</button>
                     </div>
                 </form><br/><br/>
             </div>
@@ -51,4 +57,3 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
     </body>
 </html>
-
