@@ -62,10 +62,10 @@ function tablesText() {
         success: function(response) {
             var ar = response.split(";");
             var tbsaux = document.getElementById("tablesText");
-            tablesText.innerHTML = "<h4>Owner</h4><p>" + tbsaux[0] + "</p>" +
-                    "<h4>Used Space</h4><p>" + tbsaux[1] + "</p><h4># Rows</h4>" +
-                    "<p>" + tbsaux[2] + "</p><h4>AVG Row Lenght</h4><p>"+tbsaux[3]+"</p>"+
-                    "<h4>Tablespace</h4><p>"+tbsaux[4]+"</p>";
+            tbsaux.innerHTML = "<h4>Owner</h4><p>" + ar[0] + "</p>" +
+                    "<h4>Used Space</h4><p>" + ar[1] + "</p><h4># Rows</h4>" +
+                    "<p>" + ar[2] + "</p><h4>AVG Row Lenght</h4><p>" + ar[3] + "</p>" +
+                    "<h4>Tablespace</h4><p>" + ar[4] + "</p>";
             setTimeout(tablesText, 3000);
         }
     });
@@ -197,6 +197,7 @@ function SGAMonitor() {
             }]
     });
     chart.render();
+    updateSmile(Math.round(used * 100 / total));
     if (sgaTimeLine.length > 60)
         sgaTimeLine.shift();
     setTimeout(SGAMonitor, 2000);
@@ -211,6 +212,17 @@ function updatePools() {
             setTimeout(updatePools, 2000);
         }
     });
+}
+
+function updateSmile(i) {
+    var health = document.getElementById("health");
+    if (parseInt(i) > 80) {
+        health.innerHTML = "<img class=\"health center-block\" src=\"../img/bad.png\" alt=\"BAD\"/>";
+    } else if (parseInt(i) > 60) {
+        health.innerHTML = "<img class=\"health center-block\" src=\"../img/regular.png\" alt=\"ALERT\"/>";
+    } else {
+        health.innerHTML = "<img class=\"health center-block\" src=\"../img/good.png\" alt=\"GOOD\"/>";
+    }
 }
 
 function sharedPool() {
@@ -410,6 +422,76 @@ function genRedos() {
             }
             especifico.innerHTML = str;
             setTimeout(genRedos, 30000);
+        },
+        error: function(response) {
+            especifico.innerHTML = "Unespected error: " + response; //Show Errors
+        }
+    });
+}
+
+////////////////////////////////////////////////////Users///////////////////////
+
+var userSelected = 0; //Indicates the selected group
+
+function changeSelectedUser(i) {
+    userSelected = parseInt(i);
+}
+
+function selectedUser() {
+    var especifico = document.getElementById("especifico");
+    var str = "";
+    var res = [];
+    $.ajax({
+        url: 'redoService',
+        data: {
+            type: String(userSelected)
+        },
+        dataType: 'text',
+        success: function(response) {
+            if (response === "nothing") {
+                str = "<h2>Select one of the left group to show the log information</h2>";
+            } else {
+                res = response.split(";");
+                str = "<table class=\"table\"><thead><tr><th><h3>Group " + String(logSelected) + "</h3></th></tr></thead>";
+                str += "<tbody><tr><th>Sequence</strong></th></tr><tr><td>" + res[0] + "</td></tr>";
+                str += "<tr><th>Size</strong></th></tr><tr><td>" + res[1] + " KB</td></tr>";
+                str += "<tr><th># Members</strong></th></tr><tr><td>" + res[2] + " members</td></tr>";
+                str += "<tr><th>Archived</strong></th></tr><tr><td>" + res[3] + "</td></tr>";
+                str += "<tr><th>Status</strong></th></tr><tr><td>" + res[4] + "</td></tr>";
+                str += "<tr><th>Path</strong></th></tr><tr><td>" + res[5] + "</td></tr>";
+                str += "</tbody></table>";
+            }
+            especifico.innerHTML = str;
+            setTimeout(selectedUser, 2000);
+        },
+        error: function(response) {
+            especifico.innerHTML = "Unespected error: " + response; //Show Errors
+        }
+    });
+}
+
+function genUser() {
+    var especifico = document.getElementById("general");
+    var str = "";
+    var res = [];
+    $.ajax({
+        url: 'redoService',
+        data: {
+            type: 'update'
+        },
+        dataType: 'text',
+        success: function(response) {
+            res = response.split(";");
+            res.pop();
+            for (i = 0; i < res.length; i += 3) {
+                str += "<tr onclick=\"changeSelectedLog(" + res[i] + ")\">";
+                str += "\t<td><img src=\"../img/" + res[i + 1].toLowerCase() + ".png\" alt=\"" + res[i + 1] + "\" class=\"semaphore\"/></td>";
+                str += "\t<td>Nº" + res[i] + "</td>";
+                str += "\t<td>" + res[i + 2] + " member" + ((res[i + 2] === '1') ? "" : "s") + "</td>";
+                str += "</tr>";
+            }
+            especifico.innerHTML = str;
+            setTimeout(genUser, 30000);
         },
         error: function(response) {
             especifico.innerHTML = "Unespected error: " + response; //Show Errors

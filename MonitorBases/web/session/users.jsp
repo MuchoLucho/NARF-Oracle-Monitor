@@ -81,21 +81,31 @@
                         </div>                        
                     </div><!-- /.row -->
                     <div class="row">
-                        <div class="col-md-3 col-sm-3 inverseBox">
-                            <h3>General Information</h3>
-                            <h4>DB Name</h4><p>Database Name</p>
-                            <h4>Oracle Version</h4><p>Version</p>
-                            <hr/>
-                            <h3>Database Health</h3>
-                            <h4>Status</h4><img class="health center-block" src="../img/bad.png" alt="BAD"/>
-                            <h4>Cause</h4><p>Nothing</p>
-                            <h4>Recomendation</h4><p>Nothing</p>
+                         <div class="col-md-5 col-lg-5 col-sm-6 jumbotron">
+                            <div class="panel panel-default">
+                                <!-- Default panel contents -->
+                                <div class="panel-heading">Click a row to get more information about a log</div>
+                                <!-- Table -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Group #</th>
+                                            <th># of Members</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="general">
+                                    </tbody>
+                                </table>
+                            </div>                            
                         </div>
-                        <div class="col-md-6 col-lg-6">
-                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                        <div class="col-md-5 col-lg-5 col-sm-6">
+                            <div class="jumbotron">
+                                <span id="especifico"></span>
+                            </div>
                         </div>
-                        <div class="col-md-3 col-lg-3">
-                            <canvas id="gauge2" class="center-block"></canvas>
+                        <div class="col-md-2 hidden-xs hidden-sm">
+                            <img style="max-height: 450px; max-width: 100%" src="../img/semaphore.svg" alt=""/>
                         </div>
                     </div>
                 </div> <!--Container-fluid-->

@@ -27,14 +27,15 @@
             </div>
             <div class="row">
                 <form class="col-md-12" action="Login" method="post">
-                    <h1 style="color: white">Change Connection Parameters</h1>
-                    <h2 style="color: white">Database Information</h2>
+                    <h1 style="color: white">Connection Parameters</h1>
+                    <h2 style="color: white">User Information</h2>
                     <div class="form-group">
                         <input type="text" class="form-control input-lg" placeholder="Username" name="Username">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control input-lg" placeholder="Password" name="Password">
                     </div>
+                    <h2 style="color: white">Database Information</h2>
                     <div class='form-group'>
                         <input type='text' class='form-control input-lg' placeholder='SID' name='SID'>
                     </div>
