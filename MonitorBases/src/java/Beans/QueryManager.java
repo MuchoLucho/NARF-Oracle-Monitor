@@ -32,7 +32,7 @@ public class QueryManager {
     public boolean connectDB(String user, String pass) {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", user, pass);
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", user, pass);
         } catch (SQLException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
             con = null;
