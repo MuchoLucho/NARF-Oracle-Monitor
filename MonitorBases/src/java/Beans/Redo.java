@@ -1,7 +1,8 @@
 package Beans;
 
 public class Redo {
-    public Redo(int group, int sequence, int kb, int members, boolean archived, char status, String path) {
+
+    public Redo(int group, int sequence, int kb, int members, boolean archived, String status, String path) {
         this.group = group;
         this.sequence = sequence;
         this.kb = kb;
@@ -11,7 +12,7 @@ public class Redo {
         this.path = path;
     }
 
-    public void updateRedo(int sequence, int members, boolean archived, char status) {
+    public void updateRedo(int sequence, int members, boolean archived, String status) {
         this.sequence = sequence;
         this.members = members;
         this.archived = archived;
@@ -71,16 +72,24 @@ public class Redo {
         this.archived = archived;
     }
 
-    public char getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(char status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
     public String getPath() {
         return path;
+    }
+
+    public void appendPath(String s) {
+        if(path!=null)
+            path.concat("\n" + s);
+        else{
+            path=s;
+        }
     }
 
     public int getGroup() {
@@ -92,6 +101,6 @@ public class Redo {
     private int kb;
     private int members;
     private boolean archived;
-    private char status;
-    private final String path; //->location/member   
+    private String status;
+    private String path = null; //->location/member   
 }

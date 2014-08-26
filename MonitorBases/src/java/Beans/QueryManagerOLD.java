@@ -15,7 +15,7 @@ import oracle.jdbc.OracleResultSet;
  *
  * @author Javier
  */
-public class Consultor {
+public class QueryManagerOLD {
 
     private static Connection con = null;/*Estatico. Por el momento solo se permite conexion a una sola base.*/
 
@@ -25,10 +25,10 @@ public class Consultor {
             Class.forName("oracle.jdbc.OracleDriver");
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", user, pass);
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;
@@ -61,7 +61,7 @@ public class Consultor {
                 tbSpaces.updateTBS(nombre, estado, tamTotal, tamUsado, dirDBF);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -115,7 +115,7 @@ public class Consultor {
                 users.updateUsers(username, defaultTBS, tempTBS, status);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -142,7 +142,7 @@ public class Consultor {
                 tables.updateTables(name, owner, tamTabla, numRows, numRows, TBSName);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -163,7 +163,7 @@ public class Consultor {
             }
             return new SGAData(total[0], total[2], total[1], used[0], used[2], used[1]);
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -192,10 +192,10 @@ public class Consultor {
                 used[i] = rs.getInt("USED");
                 i++;
             }
-            sgadata.updateValues(used[0], used[2], used[1]);
+            //sgadata.updateValues(used[0], used[2], used[1]);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Consultor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueryManagerOLD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
