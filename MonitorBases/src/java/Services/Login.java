@@ -45,6 +45,7 @@ public class Login extends HttpServlet {
             Model.initMonitorTest();
             Model.updateInfo();
             session.setAttribute("username", username);//Ya esta conectado.
+
             response.sendRedirect("session/dashboard.jsp");
             /*PrintWriter out = response.getWriter();
              out.println("<!DOCTYPE html>");
@@ -55,9 +56,9 @@ public class Login extends HttpServlet {
              out.println("<body>");
              out.println("<h1>ESTAS CONECTADO UN APLAUSO BABY " + request.getContextPath() + "</h1>");
              out.println("</body>");
-             <<<<<<< HEAD
              out.println("</html>");*/
         }
+
 
     }
 
