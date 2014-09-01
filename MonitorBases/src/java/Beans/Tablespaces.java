@@ -16,7 +16,7 @@ public class Tablespaces {
         this.nombres = nombres;
     }
 
-    public void updateTBS(String name, boolean state, int totalSize, int usedSpace, String dirDBF) {
+    public void updateTBS(String name, boolean state, long totalSize, long usedSpace, String dirDBF) {
         TBSValues values;
         if (hashTBS.containsKey(name)) {
             values = hashTBS.get(name);
