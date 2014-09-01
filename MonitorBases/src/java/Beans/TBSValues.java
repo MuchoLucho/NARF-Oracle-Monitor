@@ -1,17 +1,28 @@
 package Beans;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class TBSValues {
 
-    boolean estado;
-    int tamTotal;
-    int tamUsado;
+    boolean estado;//Nota cambiar el spanglish cholo.
+    long tamTotal;
+    long tamUsado = -1;
+    final int historySize = 10; //Average updated every 10 seconds
+    private long n = 1;
+    private float avgGrowth = 0;
+    //private long prevSizeUsed = 0;
+    ArrayList<Long> spaceStory = new ArrayList<>();
     String dirDBF;
 
-    public TBSValues(boolean estado, int tamTotal, int tamUsado, String dirDBF) {
+    public TBSValues(boolean estado, long tamTotal, long tamUsado, String dirDBF) {
         this.estado = estado;
         this.tamTotal = tamTotal;
         this.tamUsado = tamUsado;
         this.dirDBF = dirDBF;
+
     }
 
     public boolean isEstado() {
@@ -22,20 +33,39 @@ public class TBSValues {
         this.estado = estado;
     }
 
-    public int getTamTotal() {
+    public long getTamTotal() {
         return tamTotal;
     }
 
-    public void setTamTotal(int tamTotal) {
+    public void setTamTotal(long tamTotal) {
         this.tamTotal = tamTotal;
     }
 
-    public int getTamUsado() {
+    public long getTamUsado() {
         return tamUsado;
     }
 
-    public void setTamUsado(int tamUsado) {
-        this.tamUsado = tamUsado;
+    public void setTamUsado(long nuevoTamUsado) {
+        if (spaceStory.isEmpty()) {
+            if(tamUsado != -1)
+                this.spaceStory.add(nuevoTamUsado - tamUsado);
+        } else {
+            if (spaceStory.size() == historySize)
+                flushArray();
+            this.spaceStory.add(nuevoTamUsado - tamUsado);
+        }
+        this.tamUsado = nuevoTamUsado;
+    }
+
+    public void flushArray() {
+        float newAvg = (float) 0.0;
+        for (long x : spaceStory) {
+            newAvg += x;
+        }
+        newAvg/=historySize;
+        this.avgGrowth = n>1?((float)((avgGrowth * (n - 1) / n) + newAvg / n)):newAvg;
+        spaceStory.clear();
+        n++;
     }
 
     public String getDirDBF() {

@@ -72,10 +72,10 @@ public class QueryManager {
         PreparedStatement pst;
         ResultSet rs;
         String sql = "SELECT t.tablespace_name \"Tablespace\", t.status \"Estado\",\n"
-                + "ROUND(MAX(d.bytes)/1024/1024,2) \"MB Tamaño\",\n"
-                + "ROUND((MAX(d.bytes)/1024/1024) -\n"
-                + "(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024),2) \"MB Usados\",\n"
-                + "ROUND(SUM(decode(f.bytes, NULL,0, f.bytes))/1024/1024,2) \"MB Libres\",\n"
+                + "ROUND(MAX(d.bytes),2) \"MB Tamaño\",\n"
+                + "ROUND((MAX(d.bytes)) -\n"
+                + "(SUM(decode(f.bytes, NULL,0, f.bytes))),2) \"MB Usados\",\n"
+                + "ROUND(SUM(decode(f.bytes, NULL,0, f.bytes)),2) \"MB Libres\",\n"
                 + "t.pct_increase \"% incremento\",\n"
                 + "SUBSTR(d.file_name,1,80) \"DireccionDBF\"\n"
                 + "FROM DBA_FREE_SPACE f, DBA_DATA_FILES d, DBA_TABLESPACES t\n"
@@ -86,14 +86,13 @@ public class QueryManager {
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
-            while (rs.next()) {
+            while (rs.next()){
                 String nombre = rs.getString("Tablespace");
                 boolean estado = rs.getString("Estado").equals("ONLINE");//Habra que cambiarlo si hay mas de dos estados.
-                int tamTotal = rs.getInt("MB Tamaño");
-                int tamUsado = rs.getInt("MB Usados");
+                long tamTotal = rs.getLong("B Tamaño");
+                long tamUsado = rs.getLong("B Usados");
                 String dirDBF = rs.getString("DireccionDBF");
                 tbSpaces.updateTBS(nombre, estado, tamTotal, tamUsado, dirDBF);
-
             }
             pst.close();
             rs.close();

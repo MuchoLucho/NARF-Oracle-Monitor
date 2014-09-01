@@ -51,7 +51,7 @@ public class Model {
                         queryManager.getLogActualInfo(redos);
 
                         
-                        Thread.sleep(10000);
+                        Thread.sleep(1000);
                         Thread.yield();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
