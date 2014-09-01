@@ -1,20 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Beans;
 
 import java.sql.*;
+import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import oracle.jdbc.OraclePreparedStatement;
-import oracle.jdbc.OracleResultSet;
 
-/**
- *
- * @author Javier
- */
 public class QueryManager {
 
     private static Connection con = null;/*Estatico. Por el momento solo se permite conexion a una sola base.*/
@@ -33,11 +23,7 @@ public class QueryManager {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", user, pass);
-        } catch (SQLException ex) {
-            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
-            con = null;
-            return false;
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
             con = null;
             return false;
@@ -54,16 +40,14 @@ public class QueryManager {
     }
 
     public boolean connectDB(String user, String pass, String address, String port, String instanceName) {
+        conDir = "jdbc:oracle:thin:@" + address + ":" + port + ":" + instanceName;        
         try {
-            conDir = "jdbc:oracle:thin:@" + address + ":" + port + ":" + instanceName;
-            Class.forName("oracle.jdbc.OracleDriver");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
             con = DriverManager.getConnection(conDir, user, pass);
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(QueryManager.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            con = null;
+            return false;        
         }
         return true;
     }
@@ -328,8 +312,8 @@ public class QueryManager {
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
-            String version="";
-            String instanceName="";
+            String version = "";
+            String instanceName = "";
             while (rs.next()) {
                 version = rs.getString("version");
                 instanceName = rs.getString("instance_name");
