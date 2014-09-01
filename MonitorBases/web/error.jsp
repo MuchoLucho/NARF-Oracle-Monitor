@@ -28,22 +28,23 @@
             <div class="row">
                 <form class="col-md-12" action="Login" method="post">
                     <h1 style="color: white">Connection Parameters</h1>
+                    <h3 style="color: red">The connection has been rejected. Check the login data as well as the parameters of the database and try again</h3>
                     <h2 style="color: white">User Information</h2>
                     <div class="form-group">
-                        <input type="text" class="form-control input-lg" placeholder="Username" name="Username" value="luis">
+                        <input type="text" class="form-control input-lg" placeholder="Username" name="Username">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control input-lg" placeholder="Password" name="Password" value="rontokbro">
+                        <input type="password" class="form-control input-lg" placeholder="Password" name="Password">
                     </div>
                     <h2 style="color: white">Database Information</h2>
                     <div class='form-group'>
-                        <input type='text' class='form-control input-lg' placeholder='SID' name='SID' value="XE">
+                        <input type='text' class='form-control input-lg' placeholder='SID' name='SID'>
                     </div>
                     <div class='form-group'>
-                        <input type='text' class='form-control input-lg' placeholder='Host Name' name='HostName' value="localhost">
+                        <input type='text' class='form-control input-lg' placeholder='Host Name' name='HostName'>
                     </div>
                     <div class='form-group'>
-                        <input type='text' class='form-control input-lg' placeholder='Port' name='Port' value="1521">
+                        <input type='text' class='form-control input-lg' placeholder='Port' name='Port'>
                     </div><br/>
                     <div class='form-group'>
                         <table style="width: 100%">

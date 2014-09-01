@@ -29,3 +29,12 @@
     background-color: #333;
     color: white;
 }
+
+.submitLink {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-top: 4px;
+    margin-bottom: 4px; 
+    margin-left: 4px; 
+}

@@ -15,9 +15,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body onload="updateTBS();
-            memTBS();
-            tablesTBS()">
+    <body onload="itarativeUpdate()">
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -35,10 +33,23 @@
                     </a>
                 </div>
                 <!-- Top Menu Items -->
-                <form method="post" action="Lougout">
+                <form method="post" action="Parameters">
                     <ul class="nav navbar-right top-nav">
-                        <li>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> Logout </button>
+                        <li class="dropdown">
+                            <br class="hidden-lg hidden-md"/>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <% out.print((String) session.getAttribute("username"));%>  <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button type="submit" name="history" class="submitLink"><span class="glyphicon glyphicon-list"></span> Logs</button>
+                                </li>
+                                <li>
+                                    <button type="submit" name="settings" class="submitLink"><span class="glyphicon glyphicon-cog"></span> Settings</button>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <button type="submit" name="logout" class="submitLink"><span class="glyphicon glyphicon-log-out"></span> Log Out</button>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </form>
@@ -73,16 +84,33 @@
                         </div>                        
                     </div><!-- /.row -->
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div id="mainChart" style="height: 450px; width: 100%;"></div>
-                            <br/><h2 style="text-align: center">Select a slice (tablespace) above to view the information</h2>
+                        <div class="col-lg-12">
+                            <h2><strong>Select a slice (tablespace) above to view the information</strong></h2><br/>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div id="memoryChart" style="height: 450px; width: 100%;"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div id="mainChart" style="height: 400px; width: 100%;"></div>                            
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <h2>Info about the Tablespace Selected</h2>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                    <span class="sr-only">40% Complete (success)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div id="memoryChart" style="height: 400px; width: 100%;"></div>
                             <span id="memText"></span>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div id="tablesChart" style="height: 450px; width: 100%;"></div>
+                        <div class="col-lg-6 col-md-6">
+                            <div id="tablesChart" style="height: 400px; width: 100%;"></div>
                             <span id="tablesText"></span>
                         </div>
                     </div>
@@ -93,6 +121,6 @@
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/canvasjs.min.js"></script>
         <script type="text/javascript" src="../js/gauge.min.js"></script>
-        <script type="text/javascript" src="../js/scripts.js"></script>
+        <script type="text/javascript" src="../js/tbs.js"></script>
     </body>
 </html>

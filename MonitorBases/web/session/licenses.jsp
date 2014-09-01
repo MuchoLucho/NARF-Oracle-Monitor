@@ -33,10 +33,23 @@
                     </a>
                 </div>
                 <!-- Top Menu Items -->
-                <form method="post" action="Lougout">
+                <form method="post" action="Parameters">
                     <ul class="nav navbar-right top-nav">
-                        <li>
-                            <button class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> Logout </button>
+                        <li class="dropdown">
+                            <br class="hidden-lg hidden-md"/>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <% out.print((String) session.getAttribute("username"));%>  <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button type="submit" name="history" class="submitLink"><span class="glyphicon glyphicon-list"></span> Logs</button>
+                                </li>
+                                <li>
+                                    <button type="submit" name="settings" class="submitLink"><span class="glyphicon glyphicon-cog"></span> Settings</button>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <button type="submit" name="logout" class="submitLink"><span class="glyphicon glyphicon-log-out"></span> Log Out</button>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </form>
@@ -71,10 +84,14 @@
                         </div>                        
                     </div><!-- /.row -->
                     <div class="row">
-                        <div class="col-lg-12">
-                            <h2>This Software is licensed by GPL 3.0 and Creative Commons 3.0</h2>
-                            <p>The art used in this site is licensed by Creative Commons BY-NC-SA</p>
-                            <p>The code used in this site is licensed by GNU Public License 3.0</p>
+                        <div class="col-lg-8 col-md-8">
+                            <h2>This Software is licensed by LGPL 3.0 and Creative Commons 3.0</h2>
+                            <p>The art used in this site is licensed by Creative Commons BY-SA</p>
+                            <p>The code used in this site is licensed by GNU Lesser General Public License 3.0</p>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <img style="width: 150px; margin: 5px" src="../img/cc-by-sa.png" alt="" class="hidden-xs"/>
+                            <img style="width: 150px; margin: 5px" src="../img/lgpl.png" alt="" class="hidden-xs"/>
                         </div>
                     </div>
                     <div class="row">

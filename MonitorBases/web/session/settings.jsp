@@ -15,7 +15,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body onload="runSGAService()">
+    <body>
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -57,7 +57,7 @@
                 <br/><br/>
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
-                        <li class="active">
+                        <li>
                             <a href="dashboard.jsp"><span class="glyphicon glyphicon-home"></span>  Dashboard</a>
                         </li> 
                         <li>
@@ -78,39 +78,17 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Dashboard <small>Welcome</small>
+                                Settings
                             </h1>
                         </div>                        
                     </div><!-- /.row -->
                     <div class="row">
-                        <div class="col-md-2 col-sm-2 inverseBox">
-                            <h3>General Information</h3>
-                            <span id="info"></span>
-                            <hr/>
-                            <h3>Database Health</h3>
-                            <h4>Status</h4><span class="health" id="health"></span>                            
-                        </div>
-                        <div class="col-md-7 col-lg-7"><!--Si se quiere CPU y RAM se ponen col-md-6-->
-                            <div id="chartContainer" style="height: 500px; width: 100%;"></div>
-                        </div>
-                        <div class="col-md-3 col-lg-3">
-                            <table class="table">
-                                <tr><th colspan="2">Shared Pool</th></tr>
-                                <tr><td><canvas id="sharedPool" class="center-block"></canvas></td><td id="sPtext"></td></tr>
-                                <tr><th colspan="2">Large Pool</th></tr>
-                                <tr><td><canvas id="largePool" class="center-block"></canvas></td><td id="lPtext"></td></tr>
-                                <tr><th colspan="2">Java Pool</th></tr>
-                                <tr><td><canvas id="javaPool" class="center-block"></canvas></td><td id="jPtext"></td></tr>
-                            </table>
-                        </div>
+                        
                     </div>
                 </div><!--Container-fluid-->
             </div><!-- /#page-wrapper -->
         </div><!-- /#wrapper -->
         <script type="text/javascript" src="../js/jquery-1.11.0.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../js/canvasjs.min.js"></script>
-        <script type="text/javascript" src="../js/gauge.min.js"></script>
-        <script type="text/javascript" src="../js/sga.js"></script>
     </body>
 </html>
