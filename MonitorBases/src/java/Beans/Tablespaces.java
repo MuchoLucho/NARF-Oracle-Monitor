@@ -42,7 +42,7 @@ public class Tablespaces {
     public String toStringTablespace(String n) {
         StringBuilder str = new StringBuilder();
         str.append(hashTBS.get(n).getTamUsado()).append(";").append(hashTBS.get(n).getTamTotal())
-                .append(";").append(hashTBS.get(n).getDirDBF()).append(";");
+                .append(";").append(hashTBS.get(n).getDirDBF()).append(";").append(hashTBS.get(n).getHoursUntilFull()).append(";");
         return str.toString();
     }
 }

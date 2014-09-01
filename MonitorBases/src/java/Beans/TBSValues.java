@@ -75,4 +75,7 @@ public class TBSValues {
     public void setDirDBF(String dirDBF) {
         this.dirDBF = dirDBF;
     }
+    public float getHoursUntilFull(){
+        return (this.tamTotal-this.tamUsado)/avgGrowth/3600;
+    }
 }
