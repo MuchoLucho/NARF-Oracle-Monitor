@@ -97,7 +97,7 @@ function memTBS() {
             //}
             var chart = new CanvasJS.Chart("memoryChart", {
                 title: {
-                    text: "Ramaining Space"
+                    text: "Remaining Space"
                 },
                 animationEnabled: false,
                 legend: {

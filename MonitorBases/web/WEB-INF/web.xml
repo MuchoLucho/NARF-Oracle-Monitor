@@ -66,11 +66,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
-        <url-pattern>/Logout</url-pattern>
+        <url-pattern>/session/Logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DBInfoService</servlet-name>
-        <url-pattern>/DBInfoService</url-pattern>
+        <url-pattern>/session/DBInfoService</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
