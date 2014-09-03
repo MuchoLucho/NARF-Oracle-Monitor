@@ -36,7 +36,13 @@ function updateTBS() {
                 legend: {
                     verticalAlign: "center",
                     horizontalAlign: "left",
-                    fontSize: 20
+                    fontSize: 20,
+                    itemclick: function(e) {
+                        currentTBS = (e.dataPoint.legendText).toUpperCase();
+                        memTBS();
+                        tablesText();
+                        tablesTBS();
+                    }
                 },
                 data: [{
                         type: "pie",
@@ -72,7 +78,6 @@ function tablesText() {
                     "<h4>Used Space</h4><p>" + ar[1] + "</p><h4># Rows</h4>" +
                     "<p>" + ar[2] + "</p><h4>AVG Row Lenght</h4><p>" + ar[3] + "</p>" +
                     "<h4>Tablespace</h4><p>" + ar[4] + "</p>";
-            setTimeout(tablesText, refreshRate);
         }
     });
 }
@@ -94,13 +99,13 @@ function memTBS() {
                 indexLabel: "#percent%"
             });
             memtbs.push({
-                y: parseInt(tbsaux[1]),
+                y: parseInt(tbsaux[1]) - parseInt(tbsaux[0]),
                 legendText: "REMAINING",
                 indexLabel: "#percent%"
             });
             var chart = new CanvasJS.Chart("memoryChart", {
                 title: {
-                    text: "Ramaining Space"
+                    text: "Remaining Space"
                 },
                 animationEnabled: false,
                 legend: {
@@ -117,6 +122,7 @@ function memTBS() {
                     }]
             });
             chart.render();
+            llenado();
             var memText = document.getElementById("memText");
             memText.innerHTML = "<h4>Memory Used</h4><p>" + tbsaux[0] + "</p>" +
                     "<h4>Total Memory</h4><p>" + tbsaux[1] + "</p><h4>Location</h4>" +
@@ -153,17 +159,34 @@ function tablesTBS() {
                 legend: {
                     verticalAlign: "center",
                     horizontalAlign: "left",
-                    fontSize: 20
+                    fontSize: 20,
+                    itemclick: function(e) {
+                        currentTable = (e.dataPoint.legendText).toUpperCase();
+                        memTBS();
+                        tablesText();
+                        tablesTBS();
+                    }
                 },
                 data: [{
                         type: "pie",
                         startAngle: -20,
                         showInLegend: true,
                         toolTipContent: "{legendText}: {y} KB",
-                        dataPoints: tablestbs
+                        dataPoints: tablestbs,
+                        click: function(e) {
+                            currentTBS = (e.dataPoint.legendText).toUpperCase();
+                            memTBS();
+                            tablesText();
+                            tablesTBS();
+                        }
                     }]
             });
             chart.render();
         }
     });
+}
+
+function llenado() {
+    document.getElementById("filling").innerHTML = 1;
+    document.getElementById("remaining").innerHTML = 1200;
 }

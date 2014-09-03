@@ -48,8 +48,8 @@
                     <div class='form-group'>
                         <table style="width: 100%">
                             <tr>
-                                <td><button class='btn btn-primary btn-lg btn-block btn-danger' type='submit'>Log In</button></td>
-                                <td><button class='btn btn-primary btn-lg btn-block btn-default' type="reset">Clean</button></td>
+                                <td style="width: 50%"><button class='btn btn-primary btn-lg btn-block btn-danger' type='submit'>Log In</button></td>
+                                <td style="width: 50%"><button class='btn btn-primary btn-lg btn-block btn-default' type="reset">Clear</button></td>
                             </tr>
                         </table>                      
                     </div>

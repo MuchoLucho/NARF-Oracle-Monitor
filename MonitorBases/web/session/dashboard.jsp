@@ -88,7 +88,7 @@
                             <span id="info"></span>
                             <hr/>
                             <h3>Database Health</h3>
-                            <h4>Status</h4><span class="health" id="health"></span>                            
+                            <h4>Status</h4><span class="health" id="health"></span><br/>                            
                         </div>
                         <div class="col-md-7 col-lg-7"><!--Si se quiere CPU y RAM se ponen col-md-6-->
                             <div id="chartContainer" style="height: 500px; width: 100%;"></div>

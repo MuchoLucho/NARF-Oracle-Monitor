@@ -85,17 +85,33 @@
                     </div><!-- /.row -->
                     <div class="row">
                         <div class="col-lg-8 col-md-8">
-                            <h2>This Software is licensed by LGPL 3.0 and Creative Commons 3.0</h2>
-                            <p>The art used in this site is licensed by Creative Commons BY-SA</p>
-                            <p>The code used in this site is licensed by GNU Lesser General Public License 3.0</p>
+                            <h2>This Software is licensed by GPL 3.0 and Creative Commons 3.0</h2>
+                            <p>The art used in this site is licensed by Creative Commons BY-SA</p>                            
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <img style="width: 150px; margin: 5px" src="../img/cc-by-sa.png" alt="" class="hidden-xs"/>
-                            <img style="width: 150px; margin: 5px" src="../img/lgpl.png" alt="" class="hidden-xs"/>
+                            <img style="width: 150px; margin: 5px" src="../img/gpl.png" alt="" class="hidden-xs"/>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <p>
+                                NARF Oracle Monitor
+                                Copyright &COPY; 2014, NARF Inc., Some rights reserved
+                                This program is free software: you can redistribute it and/or modify
+                                it under the terms of the GNU General Public License as published by
+                                the Free Software Foundation, either version 3 of the License, or
+                                (at your option) any later version.
+                                This program is distributed in the hope that it will be useful,
+                                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                                GNU General Public License for more details.
+                                You should have received a copy of the GNU General Public License
+                                along with this program.
+                                If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses/</a>.
+                            </p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3">
                             <h3>Bootstrap</h3>
                             <p>The MIT License (MIT)
                                 <br/>
@@ -121,7 +137,7 @@
                             </p>
                             <h5><a href="http://getbootstrap.com/">Oficial Site</a></h5>
                         </div>
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3">
                             <h3>Gauges</h3>
                             <p>
                                 HTML5 Canvas Gauge implementation
@@ -153,7 +169,7 @@
                                 Robert Blackburn http://www.rwblackburn.com
                             </p>
                         </div>
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3">
                             <h3>CanvasJS</h3>
                             <p>
                                 Licence "creative common attribution-noncommercial 3.0"
@@ -176,8 +192,12 @@
                                 that legally restrict others from doing anything the license permits
                             </p>
                             <h5><a href="http://www.canvasjs.com">Official Site</a></h5>
+                            <h3> SBAdmin</h3>
+                            <p>A Bootstrap 3 admin theme featuring powerful jQuery plugins to extend the functionality of the Bootstrap framework.</p>
+                            <p>License & Author Details: Apache 2.0 by Start Bootstrap</p>
+                            <a href="http://startbootstrap.com/template-overviews/sb-admin/">Official Site</a>
                         </div>
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3">
                             <h3>jQuery</h3>
                             <p>
                                 Licencia MIT/GPL

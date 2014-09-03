@@ -4,6 +4,11 @@ function changeSelectedLog(i) {
     logSelected = parseInt(i);
 }
 
+function update(){
+    selectedRedo();
+    setTimeout(update, 15000);
+}
+
 function selectedRedo() {
     var especifico = document.getElementById("especifico");
     var str = "";
@@ -28,8 +33,7 @@ function selectedRedo() {
                 str += "<tr><th>Path</strong></th></tr><tr><td>" + res[5] + "</td></tr>";
                 str += "</tbody></table>";
             }
-            especifico.innerHTML = str;
-            setTimeout(selectedRedo, 2000);
+            especifico.innerHTML = str;            
         },
         error: function(response) {
             especifico.innerHTML = "Unespected error: " + response; //Show Errors
@@ -51,17 +55,23 @@ function genRedos() {
             res = response.split(";");
             res.pop();
             for (i = 0; i < res.length; i += 3) {
-                str += "<tr onclick=\"changeSelectedLog(" + res[i] + ")\">";
+                str += "<tr onclick=\"changeSelectedLog(" + res[i] + ");selectedRedo()\">";
                 str += "\t<td><img src=\"../img/" + res[i + 2].toLowerCase() + ".png\" alt=\"" + res[i + 1] + "\" class=\"semaphore\"/></td>";
-                str += "\t<td>N�" + res[i] + "</td>";
+                str += "\t<td>N&ordm;" + res[i] + "</td>";
                 str += "\t<td>" + res[i + 1] + " member" + ((res[i + 2] === '1') ? "" : "s") + "</td>";
                 str += "</tr>";
             }
             especifico.innerHTML = str;
+            calc();
             setTimeout(genRedos, 30000);
         },
         error: function(response) {
             especifico.innerHTML = "Unespected error: " + response; //Show Errors
         }
-    });
+    });    
+}
+
+function calc() {
+    document.getElementById("switch").innerHTML = "231";
+    document.getElementById("size").innerHTML = "1020";
 }

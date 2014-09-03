@@ -83,7 +83,24 @@
                         </div>                        
                     </div><!-- /.row -->
                     <div class="row">
-                        
+                        <form class="col-md-12" action="Login" method="post"> 
+                            <div class="form-group" style="border: 1px #222 solid; padding: 15px">
+                                <h2>SGA Limits</h2>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">Warning Level</span>
+                                    <input type="number" class="form-control" value="60">
+                                    <span class="input-group-addon">%</span>
+                                </div><br/>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">Danger Level&nbsp;</span>
+                                    <input type="number" class="form-control" value="80">
+                                    <span class="input-group-addon">%</span>
+                                </div><br/>                           
+                            </div>
+                            <div class='form-group form-group-lg'>
+                                <button class='btn btn-primary btn-lg btn-block btn-danger' type="submit">Submit</button>
+                            </div>
+                        </form><br/><br/>
                     </div>
                 </div><!--Container-fluid-->
             </div><!-- /#page-wrapper -->
