@@ -207,7 +207,7 @@ function datos() {
         success: function(response) {
             res = response.split(";");
             var info = document.getElementById("info");
-            info.innerHTML = "<h4>DB Name</h4><p>" + res[0] + "</p><h4>Oracle Version</h4><p>" + res[1] + "</p>";
+            info.innerHTML = "<h4>DB Name</h4><p>" + res[1] + "</p><h4>Oracle Version</h4><p>" + res[0] + "</p>";
         }
     });
 }
